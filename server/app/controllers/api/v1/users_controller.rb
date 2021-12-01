@@ -1,5 +1,9 @@
 class Api::V1::UsersController < Api::ApplicationController
 
+  def current
+    render json: current_user
+  end
+
   def create
     users_params = params.require(:user).permit(:email, :password, :password_confirmation)
     user = User.new users_params
