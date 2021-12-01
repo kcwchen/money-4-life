@@ -1,7 +1,8 @@
 class Api::V1::BudgetsController < Api::ApplicationController
 
   def index
-
+    budgets = Budget.where(user: current_user)
+    render json: budgets, each_serializer: BudgetCollectionSerializer
   end
 
   def create
@@ -12,7 +13,6 @@ class Api::V1::BudgetsController < Api::ApplicationController
     end
     budget = Budget.new(amount: amount, category: category)
     budget.user = current_user
-    byebug
     if budget.save
       render json: {id: budget.id}
     else
