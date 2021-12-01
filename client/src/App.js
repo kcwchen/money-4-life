@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import SignUpPage from './components/SignUpPage';
 import SignInPage from './components/SignInPage';
+import BudgetIndexPage from './components/BudgetIndexPage';
 import NavBar from './components/NavBar';
 import { User } from './requests';
 import './App.css';
@@ -41,6 +42,13 @@ const App = () => {
           path='/sign_in'
           render={(routeProps) => (
             <SignInPage {...routeProps} onSignIn={getCurrentUser} />
+          )}
+        />
+        <Route
+          exact
+          path='/budget'
+          render={(routeProps) => (
+            <BudgetIndexPage {...routeProps} currentUser={user} />
           )}
         />
       </Switch>

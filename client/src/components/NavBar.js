@@ -16,6 +16,7 @@ const NavBar = (props) => {
       <NavLink to='/'>Home</NavLink>|
       {currentUser ? (
         <>
+          <NavLink to='budget'>My Budget</NavLink>|
           <button onClick={handleSignOut}>Sign Out</button>
         </>
       ) : (

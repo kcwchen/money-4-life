@@ -39,3 +39,35 @@ export const Session = {
     }).then((res) => res.json());
   },
 };
+
+export const Budget = {
+  create(params) {
+    return fetch(`${baseUrl}/budgets`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+      body: JSON.stringify(params),
+    }).then((res) => res.json());
+  },
+  update(params, bid) {
+    return fetch(`${baseUrl}/budgets/${bid}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+      body: JSON.stringify(params),
+    }).then((res) => res.json());
+  },
+  destroy(bid) {
+    return fetch(`${baseUrl}/budgets/${bid}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+    }).then((res) => res.json());
+  },
+};
