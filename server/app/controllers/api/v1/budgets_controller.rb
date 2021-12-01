@@ -41,7 +41,6 @@ class Api::V1::BudgetsController < Api::ApplicationController
   end
 
   def budget_params
-    byebug
     @amount = params[:amount].to_i * 100 # amount in cents
     @category = Category.find_by name: params[:category]
     if !@category

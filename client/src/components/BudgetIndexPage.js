@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import NewBudgetForm from './NewBudgetForm';
+import { Budget } from '../requests';
 
 const BudgetIndexPage = (props) => {
   const { currentUser } = props;
@@ -9,7 +10,14 @@ const BudgetIndexPage = (props) => {
     if (currentUser) {
       setBudgets(currentUser.budgets);
     }
-  }, [currentUser]);
+  }, [currentUser, budgets]);
+
+  const handleNewBudget = (params) => {
+    Budget.create(params).then((data) => {
+      console.log(data);
+      window.location.reload();
+    });
+  };
 
   return (
     <div>
@@ -27,7 +35,7 @@ const BudgetIndexPage = (props) => {
               </h3>
             );
           })}
-          <NewBudgetForm />
+          <NewBudgetForm createBudget={handleNewBudget} />
         </>
       )}
     </div>

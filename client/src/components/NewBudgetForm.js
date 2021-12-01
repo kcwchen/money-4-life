@@ -1,22 +1,22 @@
 import React, { useState } from 'react';
-import { Budget } from '../requests';
+// import { Budget } from '../requests';
 
-const NewBudgetForm = () => {
+const NewBudgetForm = ({ createBudget }) => {
   const [amount, setAmount] = useState('');
   const [category, setCategory] = useState('');
 
-  const handleNewBudget = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     const params = {
       amount,
       category,
     };
-    Budget.create(params).then((data) => {
-      console.log(data);
-    });
+    createBudget(params);
+    setAmount('');
+    setCategory('');
   };
   return (
-    <form onSubmit={handleNewBudget}>
+    <form onSubmit={handleSubmit}>
       <div>
         <label htmlFor='amount'>Amount</label>
         <input
