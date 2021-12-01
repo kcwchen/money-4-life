@@ -22,7 +22,7 @@ class Api::V1::BudgetsController < Api::ApplicationController
     if @budget.update(amount: @amount, category: @category)
       render json: {id: @budget.id}
     else
-      render json: { errors: @budget.errors, status: 422}
+      render json: {errors: @budget.errors, status: 422}
     end
   end
 

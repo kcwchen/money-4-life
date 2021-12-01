@@ -1,5 +1,7 @@
 class Api::V1::TransactionsController < Api::ApplicationController
-  before_action :transaction_params, except: [:index]
+  before_action :transaction_params, except: [:index, :destroy]
+  before_action :find_transaction, except: [:index, :create]
+  before_action :authenticate_user!
 
   def index
 
@@ -15,6 +17,22 @@ class Api::V1::TransactionsController < Api::ApplicationController
     end
   end
 
+  def update
+    if @transaction.update(amount: @amount, description: params[:description], transaction_date: params[:transaction_date], category: @category, account: @account)
+      render json: {id: @transaction.id}
+    else
+      render json: {errors: @transaction.errors, status: 422}
+    end
+  end
+
+  def destroy
+    if @transaction.destroy
+      render json: {status:200}
+    else
+      render json: {status:500}
+    end
+  end
+
   private
 
   def transaction_params
@@ -27,5 +45,9 @@ class Api::V1::TransactionsController < Api::ApplicationController
     if !@account
       @account = Account.create(name: params[:account], user: current_user)
     end
+  end
+
+  def find_transaction
+    @transaction = Transaction.find params[:id]
   end
 end
