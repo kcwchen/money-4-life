@@ -12,4 +12,9 @@ class Transaction < ApplicationRecord
     c = Category.find(self.category_id)
     c[:name]
   end
+
+  def account_name
+    a = Account.find(self.account_id)
+    a[:name]
+  end
 end

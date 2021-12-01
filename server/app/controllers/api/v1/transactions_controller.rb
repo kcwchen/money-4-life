@@ -1,10 +1,11 @@
 class Api::V1::TransactionsController < Api::ApplicationController
   before_action :transaction_params, except: [:index, :destroy]
   before_action :find_transaction, except: [:index, :create]
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:index]
 
   def index
-
+    transactions = Transaction.where(user: current_user)
+    render json: transactions, each_serializer: TransactionCollectionSerializer
   end
 
   def create

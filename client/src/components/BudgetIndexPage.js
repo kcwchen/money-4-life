@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import NewBudgetForm from './NewBudgetForm';
 
 const BudgetIndexPage = (props) => {
   const { currentUser } = props;
@@ -8,7 +9,7 @@ const BudgetIndexPage = (props) => {
     if (currentUser) {
       setBudgets(currentUser.budgets);
     }
-  }, []);
+  }, [currentUser]);
 
   return (
     <div>
@@ -21,11 +22,12 @@ const BudgetIndexPage = (props) => {
           </h1>
           {budgets.map((budget) => {
             return (
-              <h3>
+              <h3 key={budget.id}>
                 ${budget.amount / 100} - {budget.category}
               </h3>
             );
           })}
+          <NewBudgetForm />
         </>
       )}
     </div>

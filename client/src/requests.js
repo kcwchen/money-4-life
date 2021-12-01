@@ -71,3 +71,38 @@ export const Budget = {
     }).then((res) => res.json());
   },
 };
+
+export const Transaction = {
+  index() {
+    return fetch(`${baseUrl}/transactions`).then((res) => res.json());
+  },
+  create(params) {
+    return fetch(`${baseUrl}/transactions`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+      body: JSON.stringify(params),
+    }).then((res) => res.json());
+  },
+  update(params, tid) {
+    return fetch(`${baseUrl}/transactions/${tid}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+      body: JSON.stringify(params),
+    }).then((res) => res.json());
+  },
+  destroy(tid) {
+    return fetch(`${baseUrl}/transactions/${tid}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+    }).then((res) => res.json());
+  },
+};
