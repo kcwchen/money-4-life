@@ -5,6 +5,7 @@ class TransactionCollectionSerializer < ActiveModel::Serializer
     :description,
     :transaction_date,
     :is_subscription,
+    :user_id,
     :account_id,
     :account,
     :category_id,

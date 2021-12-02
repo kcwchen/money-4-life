@@ -41,6 +41,9 @@ export const Session = {
 };
 
 export const Budget = {
+  index() {
+    return fetch(`${baseUrl}/budgets`).then((res) => res.json());
+  },
   create(params) {
     return fetch(`${baseUrl}/budgets`, {
       method: 'POST',

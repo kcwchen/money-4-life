@@ -6,6 +6,8 @@ import SignInPage from './components/SignInPage';
 import BudgetIndexPage from './components/BudgetIndexPage';
 import TransactionIndexPage from './components/TransactionIndexPage';
 import NavBar from './components/NavBar';
+import SideBar from './components/SideBar';
+import { Flex } from '@chakra-ui/react';
 import { User } from './requests';
 import './App.css';
 
@@ -31,31 +33,40 @@ const App = () => {
   return (
     <AuthContext.Provider value={{ user: user }}>
       <BrowserRouter>
-        <NavBar currentUser={user} onSignOut={onSignOut} />
-        <Switch>
-          <Route
-            exact
-            path='/sign_up'
-            render={(routeProps) => (
-              <SignUpPage {...routeProps} onSignUp={getCurrentUser} />
-            )}
-          />
-          <Route
-            exact
-            path='/sign_in'
-            render={(routeProps) => (
-              <SignInPage {...routeProps} onSignIn={getCurrentUser} />
-            )}
-          />
-          <Route
-            exact
-            path='/budget'
-            render={(routeProps) => (
-              <BudgetIndexPage {...routeProps} currentUser={user} />
-            )}
-          />
-          <Route exact path='/transactions' component={TransactionIndexPage} />
-        </Switch>
+        <Flex w='100%'>
+          <SideBar />
+          <Flex w='100%' flexDir='column' alignItems='center'>
+            <NavBar currentUser={user} onSignOut={onSignOut} />
+            <Switch>
+              <Route
+                exact
+                path='/sign_up'
+                render={(routeProps) => (
+                  <SignUpPage {...routeProps} onSignUp={getCurrentUser} />
+                )}
+              />
+              <Route
+                exact
+                path='/sign_in'
+                render={(routeProps) => (
+                  <SignInPage {...routeProps} onSignIn={getCurrentUser} />
+                )}
+              />
+              <Route
+                exact
+                path='/budget'
+                render={(routeProps) => (
+                  <BudgetIndexPage {...routeProps} currentUser={user} />
+                )}
+              />
+              <Route
+                exact
+                path='/transactions'
+                component={TransactionIndexPage}
+              />
+            </Switch>
+          </Flex>
+        </Flex>
       </BrowserRouter>
     </AuthContext.Provider>
   );

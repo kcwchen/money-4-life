@@ -7,6 +7,9 @@ const BudgetIndexPage = (props) => {
   const [budgets, setBudgets] = useState([]);
 
   useEffect(() => {
+    Budget.index().then((data) => {
+      console.log(data);
+    });
     if (currentUser) {
       setBudgets(currentUser.budgets);
     }
