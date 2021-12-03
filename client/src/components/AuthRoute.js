@@ -10,7 +10,7 @@ const AuthRoute = ({
   if (isAuthenticated) {
     return <Route {...routeProps} component={Component} user={user} />;
   } else {
-    return <Redirect to='/sign_in' />;
+    return <Redirect to='/' />;
   }
 };
 
