@@ -1,5 +1,12 @@
-import React from 'react';
-import { Flex, Text, IconButton, Divider, Heading } from '@chakra-ui/react';
+import React, { useState } from 'react';
+import {
+  Flex,
+  Text,
+  IconButton,
+  Divider,
+  Heading,
+  Avatar,
+} from '@chakra-ui/react';
 import { motion, useCycle } from 'framer-motion';
 import {
   FiMenu,
@@ -14,6 +21,13 @@ import NavItem from './NavItem';
 
 export default function SideBar() {
   const [open, cycleOpen] = useCycle(false, true);
+  // const [active, setActive] = useState({
+  //   budget: false,
+  //   transactions: false,
+  //   subscriptions: false,
+  //   reports: false,
+  //   settings: false,
+  // });
   const MotionFlex = motion(Flex);
   const sideVariants = {
     closed: {
@@ -23,6 +37,20 @@ export default function SideBar() {
       width: '250px',
     },
   };
+
+  // const handleActive = (match, location) => {
+  //   if (!match) {
+  //     return false;
+  //   }
+  //   console.log(match.url.slice(1));
+  //   const path = match.url.slice(1);
+  //   Object.keys(active).forEach((p) => (active[p] = false));
+  //   let items = { ...active };
+  //   items[path] = true;
+  //   console.log(items);
+  //   setActive(items);
+  //   return true;
+  // };
 
   return (
     <MotionFlex
@@ -53,11 +81,64 @@ export default function SideBar() {
           alignSelf={open ? 'flex-end' : 'center'}
           onClick={cycleOpen}
         />
-        <NavItem open={open} icon={FiHome} title='Budget' active />
-        <NavItem open={open} icon={FiCalendar} title='Transactions' />
-        <NavItem open={open} icon={FiUser} title='Subscriptions' />
-        <NavItem open={open} icon={FiBriefcase} title='Reports' />
-        <NavItem open={open} icon={FiSettings} title='Settings' />
+        <NavItem
+          open={open}
+          icon={FiHome}
+          title='Budget'
+          path='budget'
+          // active={active}
+          // setActive={setActive}
+        />
+        <NavItem
+          open={open}
+          icon={FiCalendar}
+          title='Transactions'
+          path='transactions'
+          // active={active}
+          // setActive={setActive}
+        />
+        <NavItem
+          open={open}
+          icon={FiUser}
+          title='Subscriptions'
+          path='subscriptions'
+          // active={active}
+          // setActive={setActive}
+        />
+        <NavItem
+          open={open}
+          icon={FiBriefcase}
+          title='Reports'
+          path='reports'
+          // active={active}
+          // setActive={setActive}
+        />
+        <NavItem
+          open={open}
+          icon={FiSettings}
+          title='Settings'
+          path='settings'
+          // active={active}
+          // setActive={setActive}
+        />
+      </Flex>
+
+      <Flex
+        p='5%'
+        flexDir='column'
+        w='100%'
+        alignItems={open ? 'flex-start' : 'center'}
+        mb={3}
+      >
+        <Divider display={open ? 'flex' : 'none'} />
+        <Flex mt={3} align='center'>
+          <Avatar size='sm' src='avatar-1.jpg' />
+          <Flex flexDir='column' ml={4} display={open ? 'flex' : 'none'}>
+            <Heading as='h3' size='sm'>
+              Kevin Chen
+            </Heading>
+          </Flex>
+        </Flex>
       </Flex>
     </MotionFlex>
   );

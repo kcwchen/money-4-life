@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import AuthContext from './context/auth-context';
 import SignUpPage from './components/SignUpPage';
 import SignInPage from './components/SignInPage';
+import SignIn from './components/SignIn';
 import BudgetIndexPage from './components/BudgetIndexPage';
 import TransactionIndexPage from './components/TransactionIndexPage';
 import NavBar from './components/NavBar';
@@ -33,28 +34,28 @@ const App = () => {
   return (
     <AuthContext.Provider value={{ user: user }}>
       <BrowserRouter>
-        <Flex w='100%'>
-          <SideBar />
-          <Flex w='100%' flexDir='column' alignItems='center'>
-            <NavBar currentUser={user} onSignOut={onSignOut} />
-            <Switch>
+        <Switch>
+          <Route
+            exact
+            path='/'
+            render={(routeProps) => (
+              <SignIn {...routeProps} onSignIn={getCurrentUser} />
+            )}
+          />
+          <Route
+            exact
+            path='/sign_up'
+            render={(routeProps) => (
+              <SignUpPage {...routeProps} onSignUp={getCurrentUser} />
+            )}
+          />
+          <>
+            <SideBar />
+            <Flex w='100%' justifyContent='center'>
+              {/* <NavBar currentUser={user} onSignOut={onSignOut} /> */}
               <Route
                 exact
-                path='/sign_up'
-                render={(routeProps) => (
-                  <SignUpPage {...routeProps} onSignUp={getCurrentUser} />
-                )}
-              />
-              <Route
-                exact
-                path='/sign_in'
-                render={(routeProps) => (
-                  <SignInPage {...routeProps} onSignIn={getCurrentUser} />
-                )}
-              />
-              <Route
-                exact
-                path='/budget'
+                path='/home'
                 render={(routeProps) => (
                   <BudgetIndexPage {...routeProps} currentUser={user} />
                 )}
@@ -64,9 +65,9 @@ const App = () => {
                 path='/transactions'
                 component={TransactionIndexPage}
               />
-            </Switch>
-          </Flex>
-        </Flex>
+            </Flex>
+          </>
+        </Switch>
       </BrowserRouter>
     </AuthContext.Provider>
   );

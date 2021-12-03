@@ -22,13 +22,8 @@ const TransactionIndexPage = () => {
       {transactions.map((transaction) => {
         return (
           <h3>
-            {transaction.transaction_date.toLocaleDateString('en-CA', {
-              month: 'long',
-              day: '2-digit',
-              year: 'numeric',
-            })}{' '}
-            - ${transaction.amount / 100} - {transaction.description} -{' '}
-            {transaction.account}
+            {transaction.transaction_date} - ${transaction.amount / 100} -{' '}
+            {transaction.description} - {transaction.account}
           </h3>
         );
       })}

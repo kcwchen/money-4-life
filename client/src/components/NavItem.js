@@ -1,7 +1,26 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Flex, Text, Icon, Link, Menu, MenuButton } from '@chakra-ui/react';
+import { NavLink, useLocation } from 'react-router-dom';
 
-export default function NavItem({ icon, title, active, open }) {
+const NavItem = ({ icon, title, open, path }) => {
+  const [active, setActive] = useState({
+    budget: false,
+    transactions: false,
+    subscriptions: false,
+    reports: false,
+    settings: false,
+  });
+  const location = useLocation();
+
+  useEffect(() => {
+    Object.keys(active).forEach((p) => (active[p] = false));
+    let items = { ...active };
+    if (path === location.pathname.slice(1)) {
+      items[path] = true;
+      setActive(items);
+    }
+  }, []);
+
   return (
     <Flex
       mt={30}
@@ -11,10 +30,15 @@ export default function NavItem({ icon, title, active, open }) {
     >
       <Menu placement='right'>
         <Link
-          backgroundColor={active && '#000'}
+          as={NavLink}
+          to={path}
+          backgroundColor={active[`${path}`] && '#000'}
           p={3}
           borderRadius={8}
-          _hover={{ textDecor: 'none', backgroundColor: 'lightgrey' }}
+          _hover={{
+            textDecor: 'none',
+            backgroundColor: active[`${path}`] ? '#000' : 'gray.200',
+          }}
           w={open && '100%'}
         >
           <MenuButton w='100%'>
@@ -22,11 +46,11 @@ export default function NavItem({ icon, title, active, open }) {
               <Icon
                 as={icon}
                 fontSize='xl'
-                color={active ? '#82AAAD' : 'gray.500'}
+                color={active[`${path}`] ? '#82AAAD' : 'gray.500'}
               />
               <Text
                 ml={5}
-                color={active ? '#FFF' : '#000'}
+                color={active[`${path}`] ? '#FFF' : '#000'}
                 display={open ? 'flex' : 'none'}
               >
                 {title}
@@ -37,4 +61,6 @@ export default function NavItem({ icon, title, active, open }) {
       </Menu>
     </Flex>
   );
-}
+};
+
+export default NavItem;
