@@ -18,6 +18,17 @@ import {
   Thead,
   Tr,
   Heading,
+  Box,
+  useDisclosure,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  FormControl,
+  FormLabel,
 } from '@chakra-ui/react';
 import React, { useMemo, useEffect } from 'react';
 import { GrFormNext, GrFormPrevious } from 'react-icons/gr';
@@ -32,22 +43,19 @@ import {
   useSortBy,
   useTable,
 } from 'react-table';
+import { useForm } from 'react-hook-form';
 
 function TransactionsTable(props) {
   const { columnsData, tableData } = props;
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   const columns = useMemo(() => columnsData, []);
   const data = useMemo(() => tableData, []);
-
-  const tableInstance = useTable(
-    {
-      columns,
-      data,
-    },
-    useGlobalFilter,
-    useSortBy,
-    usePagination
-  );
 
   const {
     getTableProps,
@@ -64,7 +72,15 @@ function TransactionsTable(props) {
     setPageSize,
     setGlobalFilter,
     state,
-  } = tableInstance;
+  } = useTable(
+    {
+      columns,
+      data,
+    },
+    useGlobalFilter,
+    useSortBy,
+    usePagination
+  );
 
   const createPages = (count) => {
     let arrPageCount = [];
@@ -80,6 +96,63 @@ function TransactionsTable(props) {
 
   return (
     <>
+      <Box pos='absolute' right='10' top='10'>
+        <Button bg='#fff' border='1px solid #000' onClick={onOpen}>
+          Add Transaction
+        </Button>
+      </Box>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Add a Transaction</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody pb={6}>
+            <FormControl>
+              <FormLabel>Amount</FormLabel>
+              <Input
+                type='number'
+                step='0.01'
+                placeholder='Amount'
+                {...register('amount')}
+              />
+            </FormControl>
+
+            <FormControl mt={4}>
+              <FormLabel>Description</FormLabel>
+              <Input
+                type='text'
+                placeholder='Description'
+                {...register('description')}
+              />
+            </FormControl>
+
+            <FormControl mt={4}>
+              <FormLabel>Category</FormLabel>
+              <Input
+                type='text'
+                placeholder='Category'
+                {...register('category')}
+              />
+            </FormControl>
+
+            <FormControl mt={4}>
+              <FormLabel>Account</FormLabel>
+              <Input
+                type='text'
+                placeholder='Account'
+                {...register('account')}
+              />
+            </FormControl>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme='blue' mr={3}>
+              Save
+            </Button>
+            <Button onClick={onClose}>Cancel</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
       <Flex justifyContent='center' mt={10}>
         <Heading as='h1'>Transactions</Heading>
       </Flex>

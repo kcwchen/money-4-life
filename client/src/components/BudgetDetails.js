@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Box,
   Center,
@@ -10,10 +10,14 @@ import {
   CircularProgressLabel,
   Tooltip,
 } from '@chakra-ui/react';
-import { motion } from 'framer-motion';
 
 export default function BudgetDetails(props) {
-  const MotionCircularProgress = motion(CircularProgress);
+  const [value, setValue] = useState(0);
+
+  useEffect(() => {
+    setValue((props.expenses / props.amount) * 100);
+  });
+
   return (
     <Center py={12} px={5}>
       <Box
@@ -28,9 +32,10 @@ export default function BudgetDetails(props) {
         zIndex={1}
       >
         <Stack align={'center'}>
-          <MotionCircularProgress
+          <CircularProgress
             size='250px'
-            value={(props.expenses / props.amount) * 100}
+            transition='all 0.5s ease'
+            value={value}
             color={
               (props.expenses / props.amount) * 100 > 100
                 ? 'red.300'
@@ -40,7 +45,7 @@ export default function BudgetDetails(props) {
             <CircularProgressLabel fontSize='30'>
               ${props.amount}
             </CircularProgressLabel>
-          </MotionCircularProgress>
+          </CircularProgress>
           <Heading fontSize={'2xl'} fontFamily={'body'} fontWeight={500}>
             {props.category}
           </Heading>
