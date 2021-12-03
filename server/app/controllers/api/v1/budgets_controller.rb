@@ -1,17 +1,15 @@
 class Api::V1::BudgetsController < Api::ApplicationController
   before_action :budget_params, except: [:index, :destroy]
   before_action :find_budget, except: [:index, :create]
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:index]
 
   def index
-    byebug
-    budgets = Budget.where(user: current_user)
+    budgets = Budget.all
     render json: budgets, each_serializer: BudgetCollectionSerializer
   end
 
   def create
     budget = Budget.new(amount: @amount, category: @category)
-    byebug
     budget.user = current_user
     if budget.save
       render json: {id: budget.id}

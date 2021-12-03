@@ -4,6 +4,7 @@ import AuthContext from './context/auth-context';
 import SignUpPage from './components/SignUpPage';
 import SignInPage from './components/SignInPage';
 import SignIn from './components/SignIn';
+// import SignUp from './components/SignUp';
 import BudgetIndexPage from './components/BudgetIndexPage';
 import TransactionIndexPage from './components/TransactionIndexPage';
 import NavBar from './components/NavBar';
@@ -25,7 +26,6 @@ const App = () => {
       if (user?.id) {
         setUser(user);
       }
-      console.log(!!user);
     });
   };
 
@@ -45,7 +45,6 @@ const App = () => {
             )}
           />
           <Route
-            exact
             path='/sign_up'
             render={(routeProps) => (
               <SignUpPage {...routeProps} onSignUp={getCurrentUser} />
@@ -57,16 +56,15 @@ const App = () => {
               <Flex w='100%' justifyContent='center'>
                 {/* <NavBar currentUser={user} onSignOut={onSignOut} /> */}
                 <AuthRoute
-                  exact
                   path='/home'
-                  user={user}
                   isAuthenticated={!!user}
+                  user={user}
                   component={BudgetIndexPage}
                 />
                 <AuthRoute
-                  exact
                   path='/transactions'
                   isAuthenticated={!!user}
+                  user={user}
                   component={TransactionIndexPage}
                 />
               </Flex>

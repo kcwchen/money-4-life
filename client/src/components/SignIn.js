@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Session } from '../requests';
 import { Link as ReactLink } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
@@ -17,6 +17,7 @@ import {
 } from '@chakra-ui/react';
 
 export default function SignIn(props) {
+  const [isLoading, setIsLoading] = useState(false);
   const { onSignIn } = props;
   const {
     register,
@@ -25,6 +26,7 @@ export default function SignIn(props) {
   } = useForm();
 
   const onSubmit = (data) => {
+    setIsLoading(true);
     // e.preventDefault();
     // const formData = new FormData(e.currentTarget);
     // const params = {
@@ -35,7 +37,9 @@ export default function SignIn(props) {
     Session.create(data).then((user) => {
       if (user?.id) {
         onSignIn();
-        props.history.push('home');
+        setTimeout(() => {
+          props.history.push('home');
+        }, 2000);
       }
     });
   };
@@ -82,6 +86,7 @@ export default function SignIn(props) {
               </FormControl>
               <Stack spacing={10}>
                 <Button
+                  isLoading={isLoading}
                   bg={'blue.400'}
                   color={'white'}
                   _hover={{

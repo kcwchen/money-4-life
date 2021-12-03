@@ -10,12 +10,9 @@ const BudgetIndexPage = (props) => {
 
   useEffect(() => {
     Budget.index().then((data) => {
-      console.log(data);
+      setBudgets(data);
     });
-    if (ctx.user) {
-      setBudgets(ctx.user.budgets);
-    }
-  }, [ctx.user, budgets]);
+  }, []);
 
   const handleNewBudget = (params) => {
     Budget.create(params).then((data) => {

@@ -97,7 +97,7 @@ export default function SideBar(props) {
           open={open}
           icon={FiHome}
           title='Budget'
-          path='budget'
+          path='home'
           // active={active}
           // setActive={setActive}
         />
