@@ -52,7 +52,7 @@ const App = () => {
           />
           <>
             <Flex width='100%'>
-              <SideBar onSignOut={onSignOut} />
+              <SideBar onSignOut={onSignOut} currentUser={user} />
               <Flex w='100%' justifyContent='center'>
                 {/* <NavBar currentUser={user} onSignOut={onSignOut} /> */}
                 <AuthRoute

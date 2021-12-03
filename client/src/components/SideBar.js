@@ -23,7 +23,7 @@ import { Session } from '../requests';
 import { withRouter } from 'react-router-dom';
 
 const SideBar = (props) => {
-  const { onSignOut } = props;
+  const { onSignOut, currentUser } = props;
 
   const [open, cycleOpen] = useCycle(false, true);
   // const [active, setActive] = useState({
@@ -155,7 +155,9 @@ const SideBar = (props) => {
           <Avatar ml={open ? 3 : 0} size='sm' src='avatar-1.jpg' />
           <Flex ml={4} display={open ? 'flex' : 'none'}>
             <Heading as='h3' size='sm'>
-              Kevin Chen
+              {currentUser
+                ? `${currentUser.first_name} ${currentUser.last_name}`
+                : null}
             </Heading>
           </Flex>
         </Flex>
