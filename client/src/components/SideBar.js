@@ -131,9 +131,9 @@ export default function SideBar() {
         mb={3}
       >
         <Divider display={open ? 'flex' : 'none'} />
-        <Flex mt={3} align='center'>
-          <Avatar size='sm' src='avatar-1.jpg' />
-          <Flex flexDir='column' ml={4} display={open ? 'flex' : 'none'}>
+        <Flex mt={5} align='center'>
+          <Avatar ml={open ? 3 : 0} size='sm' src='avatar-1.jpg' />
+          <Flex ml={4} display={open ? 'flex' : 'none'}>
             <Heading as='h3' size='sm'>
               Kevin Chen
             </Heading>
