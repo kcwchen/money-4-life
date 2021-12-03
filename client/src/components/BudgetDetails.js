@@ -24,9 +24,9 @@ export default function BudgetDetails(props) {
         zIndex={1}
       >
         <Stack align={'center'}>
-          <CircularProgress size='250px'>
+          <CircularProgress size='250px' value={80}>
             <CircularProgressLabel fontSize='30'>
-              {props.amount}
+              ${props.amount / 100}
             </CircularProgressLabel>
           </CircularProgress>
           <Heading fontSize={'2xl'} fontFamily={'body'} fontWeight={500}>

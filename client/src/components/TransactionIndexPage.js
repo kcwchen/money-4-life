@@ -5,7 +5,6 @@ import AuthContext from '../context/auth-context';
 const TransactionIndexPage = () => {
   const [transactions, setTransactions] = useState([]);
   const ctx = useContext(AuthContext);
-  console.log(ctx.user);
 
   useEffect(() => {
     // Transaction.index().then((transactions) => {

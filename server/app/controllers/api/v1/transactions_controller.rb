@@ -40,10 +40,10 @@ class Api::V1::TransactionsController < Api::ApplicationController
 
   def transaction_params
     @amount = params[:amount] * 100 # amount in cents
-    @category = Category.find_by name: params[:category]
+    @category = Category.find_by name: params[:category].capitalize
     @account = Account.find_by name: params[:account], user: current_user
     if !@category
-      @category = Category.create(name: params[:category])
+      @category = Category.create(name: params[:category].capitalize)
     end
     if !@account
       @account = Account.create(name: params[:account], user: current_user)
