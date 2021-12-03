@@ -20,9 +20,9 @@ import {
 } from 'react-icons/fi';
 import NavItem from './NavItem';
 import { Session } from '../requests';
-import { Redirect } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
-export default function SideBar(props) {
+const SideBar = (props) => {
   const { onSignOut } = props;
 
   const [open, cycleOpen] = useCycle(false, true);
@@ -46,7 +46,7 @@ export default function SideBar(props) {
   const handleSignOut = () => {
     Session.destroy().then(() => {
       onSignOut();
-      <Redirect to='/' />;
+      window.location.href = 'http://localhost:3002';
     });
   };
 
@@ -161,4 +161,6 @@ export default function SideBar(props) {
       </Flex>
     </MotionFlex>
   );
-}
+};
+
+export default withRouter(SideBar);

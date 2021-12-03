@@ -7,7 +7,6 @@ import SignIn from './components/SignIn';
 // import SignUp from './components/SignUp';
 import BudgetIndexPage from './components/BudgetIndexPage';
 import TransactionIndexPage from './components/TransactionIndexPage';
-import NavBar from './components/NavBar';
 import SideBar from './components/SideBar';
 import AuthRoute from './components/AuthRoute';
 import { Flex } from '@chakra-ui/react';
@@ -45,6 +44,7 @@ const App = () => {
             )}
           />
           <Route
+            exact
             path='/sign_up'
             render={(routeProps) => (
               <SignUpPage {...routeProps} onSignUp={getCurrentUser} />
@@ -56,12 +56,14 @@ const App = () => {
               <Flex w='100%' justifyContent='center'>
                 {/* <NavBar currentUser={user} onSignOut={onSignOut} /> */}
                 <AuthRoute
+                  exact
                   path='/home'
                   isAuthenticated={!!user}
                   user={user}
                   component={BudgetIndexPage}
                 />
                 <AuthRoute
+                  exact
                   path='/transactions'
                   isAuthenticated={!!user}
                   user={user}

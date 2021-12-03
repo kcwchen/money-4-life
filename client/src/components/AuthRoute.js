@@ -7,24 +7,11 @@ const AuthRoute = ({
   component: Component,
   ...routeProps
 }) => {
-  // if (isAuthenticated) {
-  //   return <Route {...routeProps} component={component} user={user} />;
-  // } else {
-  //   return <Redirect to='/' />;
-  // }
-  return (
-    <Route
-      user={user}
-      {...routeProps}
-      render={(props) =>
-        isAuthenticated === true ? (
-          <Component {...props} />
-        ) : (
-          <Redirect to={{ pathname: '/', state: { from: props.location } }} />
-        )
-      }
-    />
-  );
+  if (isAuthenticated) {
+    return <Route {...routeProps} component={Component} user={user} />;
+  } else {
+    return <Redirect to='/sign_in' />;
+  }
 };
 
 export default AuthRoute;

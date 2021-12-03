@@ -3,6 +3,7 @@ import { User } from '../requests';
 
 const SignUpPage = (props) => {
   const { onSignUp } = props;
+  console.log(props);
 
   const handleSignUp = (e) => {
     e.preventDefault();
