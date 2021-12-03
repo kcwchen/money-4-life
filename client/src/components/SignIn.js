@@ -1,6 +1,7 @@
 import React from 'react';
 import { Session } from '../requests';
 import { Link as ReactLink } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 import {
   Flex,
   Box,
@@ -17,16 +18,21 @@ import {
 
 export default function SignIn(props) {
   const { onSignIn } = props;
-  console.log(props);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-  const handleSignIn = (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const params = {
-      email: formData.get('email'),
-      password: formData.get('password'),
-    };
-    Session.create(params).then((user) => {
+  const onSubmit = (data) => {
+    // e.preventDefault();
+    // const formData = new FormData(e.currentTarget);
+    // const params = {
+    //   email: formData.get('email'),
+    //   password: formData.get('password'),
+    // };
+    // console.log(params);
+    Session.create(data).then((user) => {
       if (user?.id) {
         onSignIn();
         props.history.push('home');
@@ -54,15 +60,25 @@ export default function SignIn(props) {
           // boxShadow={'lg'}
           p={5}
         >
-          <form>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <Stack spacing={4}>
               <FormControl id='email'>
                 <FormLabel>Email address</FormLabel>
-                <Input type='email' placeholder='Email' />
+                <Input
+                  type='email'
+                  placeholder='Email'
+                  {...register('email')}
+                />
+                {errors.email}
               </FormControl>
               <FormControl id='password'>
                 <FormLabel>Password</FormLabel>
-                <Input type='password' placeholder='Password' />
+                <Input
+                  type='password'
+                  placeholder='Password'
+                  {...register('password')}
+                />
+                {errors.password}
               </FormControl>
               <Stack spacing={10}>
                 <Button
@@ -72,7 +88,6 @@ export default function SignIn(props) {
                     bg: 'blue.500',
                   }}
                   type='submit'
-                  onSubmit={handleSignIn}
                 >
                   Sign In
                 </Button>

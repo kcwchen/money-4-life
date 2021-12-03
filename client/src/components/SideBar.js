@@ -16,10 +16,15 @@ import {
   FiBriefcase,
   FiSettings,
   FiArrowLeft,
+  FiLogOut,
 } from 'react-icons/fi';
 import NavItem from './NavItem';
+import { Session } from '../requests';
+import { Redirect } from 'react-router-dom';
 
-export default function SideBar() {
+export default function SideBar(props) {
+  const { onSignOut } = props;
+
   const [open, cycleOpen] = useCycle(false, true);
   // const [active, setActive] = useState({
   //   budget: false,
@@ -36,6 +41,13 @@ export default function SideBar() {
     open: {
       width: '250px',
     },
+  };
+
+  const handleSignOut = () => {
+    Session.destroy().then(() => {
+      onSignOut();
+      <Redirect to='/' />;
+    });
   };
 
   // const handleActive = (match, location) => {
@@ -120,6 +132,13 @@ export default function SideBar() {
           path='settings'
           // active={active}
           // setActive={setActive}
+        />
+        <NavItem
+          open={open}
+          icon={FiLogOut}
+          title='Sign Out'
+          path='/'
+          onClick={handleSignOut}
         />
       </Flex>
 
