@@ -7,6 +7,7 @@ import SignIn from './components/SignIn';
 // import SignUp from './components/SignUp';
 import BudgetIndexPage from './components/BudgetIndexPage';
 import TransactionIndexPage from './components/TransactionIndexPage';
+import SubscriptionIndexPage from './components/SubscriptionIndexPage';
 import SideBar from './components/SideBar';
 import AuthRoute from './components/AuthRoute';
 import { Flex } from '@chakra-ui/react';
@@ -68,6 +69,13 @@ const App = () => {
                   isAuthenticated={!!user}
                   user={user}
                   component={TransactionIndexPage}
+                />
+                <AuthRoute
+                  exact
+                  path='/subscriptions'
+                  isAuthenticated={!!user}
+                  user={user}
+                  component={SubscriptionIndexPage}
                 />
               </Flex>
             </Flex>

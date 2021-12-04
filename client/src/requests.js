@@ -109,3 +109,9 @@ export const Transaction = {
     }).then((res) => res.json());
   },
 };
+
+export const Subscription = {
+  index() {
+    return fetch(`${baseUrl}/subscriptions`).then((res) => res.json());
+  },
+};
