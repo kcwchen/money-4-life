@@ -50,20 +50,6 @@ const SideBar = (props) => {
     });
   };
 
-  // const handleActive = (match, location) => {
-  //   if (!match) {
-  //     return false;
-  //   }
-  //   console.log(match.url.slice(1));
-  //   const path = match.url.slice(1);
-  //   Object.keys(active).forEach((p) => (active[p] = false));
-  //   let items = { ...active };
-  //   items[path] = true;
-  //   console.log(items);
-  //   setActive(items);
-  //   return true;
-  // };
-
   return (
     <MotionFlex
       pos='sticky'
@@ -94,45 +80,30 @@ const SideBar = (props) => {
           alignSelf={open ? 'flex-end' : 'center'}
           onClick={cycleOpen}
         />
-        <NavItem
-          open={open}
-          icon={FiHome}
-          title='Budget'
-          path='home'
-          // active={active}
-          // setActive={setActive}
-        />
+        <NavItem open={open} icon={FiHome} title='Budget' path='home' />
         <NavItem
           open={open}
           icon={FiCalendar}
           title='Transactions'
           path='transactions'
-          // active={active}
-          // setActive={setActive}
         />
         <NavItem
           open={open}
           icon={FiUser}
           title='Subscriptions'
           path='subscriptions'
-          // active={active}
-          // setActive={setActive}
         />
         <NavItem
           open={open}
           icon={FiBriefcase}
           title='Reports'
           path='reports'
-          // active={active}
-          // setActive={setActive}
         />
         <NavItem
           open={open}
           icon={FiSettings}
           title='Settings'
           path='settings'
-          // active={active}
-          // setActive={setActive}
         />
         <NavItem
           open={open}

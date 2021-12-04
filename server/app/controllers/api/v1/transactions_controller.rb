@@ -9,7 +9,15 @@ class Api::V1::TransactionsController < Api::ApplicationController
   end
 
   def create
-    transaction = Transaction.new(amount: @amount, description: params[:description], transaction_date: params[:transaction_date], category: @category, account: @account)
+    if params[:is_subscription]
+      @subscription = Subscription.find_by name: params[:subscription_name].capitalize, user: current_user
+      if !@subscription
+        @subscription = Subscription.create(name: params[:subscription_name].capitalize, billing_period: params[:billing_period], amount: @amount, user: current_user)
+      end
+      transaction = Transaction.new(amount: @amount, description: params[:description], transaction_date: params[:transaction_date], category: @category, account: @account, subscription: @subscription, is_subscription: true)
+    else
+      transaction = Transaction.new(amount: @amount, description: params[:description], transaction_date: params[:transaction_date], category: @category, account: @account)
+    end
     transaction.user = current_user
     if transaction.save
       render json: {id: transaction.id}
@@ -39,12 +47,12 @@ class Api::V1::TransactionsController < Api::ApplicationController
   def transaction_params
     @amount = params[:amount] * 100 # amount in cents
     @category = Category.find_by name: params[:category].capitalize
-    @account = Account.find_by name: params[:account], user: current_user
+    @account = Account.find_by name: params[:account].capitalize, user: current_user
     if !@category
       @category = Category.create(name: params[:category].capitalize)
     end
     if !@account
-      @account = Account.create(name: params[:account], user: current_user)
+      @account = Account.create(name: params[:account].capitalize, user: current_user)
     end
   end
 

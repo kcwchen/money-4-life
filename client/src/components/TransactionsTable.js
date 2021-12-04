@@ -29,8 +29,10 @@ import {
   ModalCloseButton,
   FormControl,
   FormLabel,
+  Radio,
+  RadioGroup,
 } from '@chakra-ui/react';
-import React, { useMemo, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import { GrFormNext, GrFormPrevious } from 'react-icons/gr';
 import {
   TiArrowSortedDown,
@@ -48,12 +50,13 @@ import { useForm } from 'react-hook-form';
 function TransactionsTable(props) {
   const { columnsData, tableData } = props;
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [value, setValue] = useState('false');
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-
+  console.log(value);
   const columns = useMemo(() => columnsData, []);
   const data = useMemo(() => tableData, []);
 
@@ -143,6 +146,31 @@ function TransactionsTable(props) {
                 {...register('account')}
               />
             </FormControl>
+
+            <FormControl mt={4}>
+              <FormLabel>Transaction Date</FormLabel>
+              <Input type='date' {...register('transactionDate')} />
+            </FormControl>
+
+            <RadioGroup
+              onChange={setValue}
+              value={value}
+              mt={4}
+              defaultValue='false'
+            >
+              <FormLabel>Subscription</FormLabel>
+              <Stack spacing={5} direction='row'>
+                <Radio value='true'>Yes</Radio>
+                <Radio value='false'>No</Radio>
+              </Stack>
+            </RadioGroup>
+
+            {value === 'true' ? (
+              <FormControl mt={4}>
+                <FormLabel>Transaction Date</FormLabel>
+                <Input type='date' {...register('transactionDate')} />
+              </FormControl>
+            ) : null}
           </ModalBody>
 
           <ModalFooter>

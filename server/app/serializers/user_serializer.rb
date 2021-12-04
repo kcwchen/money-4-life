@@ -32,26 +32,38 @@ class UserSerializer < ActiveModel::Serializer
     )
   end
 
-  has_many :transactions
-    class TransactionSerializer < ActiveModel::Serializer
-      attributes(
-        :id,
-        :amount,
-        :description,
-        :transaction_date,
-        :is_subscription,
-        :user_id,
-        :account_id,
-        :account,
-        :category_id,
-        :category
-      )
-      def category
-        object&.category_name
-      end
+  has_many :subscriptions
+  class SubscriptionSerializer < ActiveModel::Serializer
+    attributes(
+      :id,
+      :name,
+      :amount,
+      :billing_period,
+      :is_active,
+      :user_id
+    )
+  end
 
-      def account
-        object&.account_name
-      end
+  has_many :transactions
+  class TransactionSerializer < ActiveModel::Serializer
+    attributes(
+      :id,
+      :amount,
+      :description,
+      :transaction_date,
+      :is_subscription,
+      :user_id,
+      :account_id,
+      :account,
+      :category_id,
+      :category
+    )
+    def category
+      object&.category_name
     end
+
+    def account
+      object&.account_name
+    end
+  end
 end
