@@ -217,11 +217,7 @@ function TransactionsTable(props) {
       <Flex justifyContent='center' mt={10}>
         <Heading as='h1'>Transactions</Heading>
       </Flex>
-      <Flex
-        direction='column'
-        w='100%'
-        overflowX={{ sm: 'scroll', lg: 'hidden' }}
-      >
+      <Flex direction='column' w='100%' mt={10} mb={10}>
         <Flex justify='space-between' align='center' w='100%' px='22px'>
           <Stack
             direction={{ sm: 'column', md: 'row' }}
@@ -256,7 +252,7 @@ function TransactionsTable(props) {
             minW='75px'
             maxW='175px'
             fontSize='sm'
-            _focus={{ borderColor: 'teal.300' }}
+            _focus={{ borderColor: 'gray.500' }}
             onChange={(e) => setGlobalFilter(e.target.value)}
           />
         </Flex>
@@ -273,22 +269,24 @@ function TransactionsTable(props) {
                       justify='space-between'
                       align='center'
                       fontSize={{ sm: '10px', lg: '12px' }}
-                      color='gray.400'
+                      color='gray.800'
                     >
                       {column.render('Header')}
-                      <Icon
-                        w={{ sm: '10px', md: '14px' }}
-                        h={{ sm: '10px', md: '14px' }}
-                        color={columns.isSorted ? 'gray.500' : 'gray.400'}
-                        float='right'
-                        as={
-                          column.isSorted
-                            ? column.isSortedDesc
-                              ? TiArrowSortedDown
-                              : TiArrowSortedUp
-                            : TiArrowUnsorted
-                        }
-                      />
+                      {column.id === 'action' ? null : (
+                        <Icon
+                          w={{ sm: '10px', md: '14px' }}
+                          h={{ sm: '10px', md: '14px' }}
+                          color={columns.isSorted ? 'gray.500' : 'gray.400'}
+                          float='right'
+                          as={
+                            column.isSorted
+                              ? column.isSortedDesc
+                                ? TiArrowSortedDown
+                                : TiArrowSortedUp
+                              : TiArrowUnsorted
+                          }
+                        />
+                      )}
                     </Flex>
                   </Th>
                 ))}
@@ -302,7 +300,7 @@ function TransactionsTable(props) {
                 <Tr {...row.getRowProps()}>
                   {row.cells.map((cell) => {
                     return (
-                      <Td {...cell.getCellProps()} fontSize={{ sm: '14px' }}>
+                      <Td {...cell.getCellProps()} fontSize='16'>
                         {cell.render('Cell')}
                       </Td>
                     );
@@ -320,12 +318,7 @@ function TransactionsTable(props) {
           w='100%'
           px={{ md: '22px' }}
         >
-          <Text
-            fontSize='sm'
-            color='gray.500'
-            fontWeight='normal'
-            mb={{ sm: '24px', md: '0px' }}
-          >
+          <Text fontSize='sm' color='gray.500' fontWeight='normal'>
             Showing {pageSize * pageIndex + 1} to{' '}
             {pageSize * (pageIndex + 1) <= tableData.length
               ? pageSize * (pageIndex + 1)
@@ -342,33 +335,34 @@ function TransactionsTable(props) {
               borderRadius='50%'
               bg='#fff'
               border='1px solid lightgray'
-              display={
-                pageSize === 5 ? 'none' : canPreviousPage ? 'flex' : 'none'
-              }
+              display={canPreviousPage ? 'flex' : 'none'}
               _hover={{
                 bg: 'gray.200',
                 opacity: '0.7',
                 borderColor: 'gray.500',
               }}
+              ml={5}
             >
               <Icon as={GrFormPrevious} w='16px' h='16px' color='gray.400' />
             </Button>
-            {pageSize === 5 ? (
-              <NumberInput
-                max={pageCount - 1}
-                min={1}
-                w='75px'
-                mx='6px'
-                defaultValue='1'
-                onChange={(e) => gotoPage(e)}
-              >
-                <NumberInputField />
-                <NumberInputStepper>
-                  <NumberIncrementStepper onClick={() => nextPage()} />
-                  <NumberDecrementStepper onClick={() => previousPage()} />
-                </NumberInputStepper>
-              </NumberInput>
-            ) : (
+            {
+              // pageSize === 5 ? (
+              //   <NumberInput
+              //     max={pageCount - 1}
+              //     min={1}
+              //     w='75px'
+              //     mx='6px'
+              //     defaultValue='1'
+              //     onChange={(e) => gotoPage(e)}
+              //   >
+              //     <NumberInputField />
+              //     <NumberInputStepper>
+              //       <NumberIncrementStepper onClick={() => nextPage()} />
+              //       <NumberDecrementStepper onClick={() => previousPage()} />
+              //     </NumberInputStepper>
+              //   </NumberInput>
+              // ) :
+              //  (
               createPages(pageCount).map((pageNumber) => {
                 return (
                   <Button
@@ -395,7 +389,8 @@ function TransactionsTable(props) {
                   </Button>
                 );
               })
-            )}
+              // )
+            }
             <Button
               variant='no-hover'
               onClick={() => nextPage()}
@@ -405,7 +400,7 @@ function TransactionsTable(props) {
               borderRadius='160px'
               bg='#fff'
               border='1px solid lightgray'
-              display={pageSize === 5 ? 'none' : canNextPage ? 'flex' : 'none'}
+              display={canNextPage ? 'flex' : 'none'}
               _hover={{
                 bg: 'gray.200',
                 opacity: '0.7',
