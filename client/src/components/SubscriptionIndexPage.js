@@ -3,6 +3,7 @@ import { Subscription } from '../requests';
 import { Spinner } from '@chakra-ui/spinner';
 import { Flex } from '@chakra-ui/layout';
 import AuthContext from '../context/auth-context';
+import SubscriptionDetails from './SubscriptionDetails';
 
 const SubscriptionIndexPage = (props) => {
   const [subscriptions, setSubscriptions] = useState([]);
@@ -27,10 +28,11 @@ const SubscriptionIndexPage = (props) => {
         >
           {subscriptions.map((subscription) => {
             return (
-              <h3>
-                {subscription.name} - {subscription.amount} -{' '}
-                {subscription.billing_period} - {subscription.user_id}
-              </h3>
+              <SubscriptionDetails
+                name={subscription.name}
+                amount={subscription.amount}
+                billingPeriod={subscription.billing_period}
+              />
             );
           })}
         </Flex>
