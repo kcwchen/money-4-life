@@ -15,11 +15,8 @@ import {
   ModalCloseButton,
   FormControl,
   FormLabel,
-  Radio,
-  RadioGroup,
   InputGroup,
   InputLeftElement,
-  Select,
   Input,
   Button,
   AlertDialog,
@@ -123,7 +120,13 @@ const TransactionIndexPage = (props) => {
   const onEditSubmit = (data) => {
     console.log(data);
     setDataReturned(false);
-    Transaction.update();
+    Transaction.update(data, data.transaction_id).then(() => {
+      Transaction.index().then((transactions) => {
+        transactions = transactions.filter((t) => t.user_id === ctx.user.id);
+        setTransactions(transactions);
+        setDataReturned(true);
+      });
+    });
   };
 
   const handleEdit = (row) => {
@@ -135,6 +138,7 @@ const TransactionIndexPage = (props) => {
     setValue('category', `${row.category}`);
     setValue('account', `${row.account}`);
     setValue('transaction_date', `${transactionDate}`);
+    setValue('transaction_id', `${row.id}`);
     onOpen();
   };
 
@@ -162,6 +166,11 @@ const TransactionIndexPage = (props) => {
             <ModalHeader>Edit Transaction</ModalHeader>
             <ModalCloseButton />
             <ModalBody pb={6}>
+              <Input
+                type='hidden'
+                name='transaction_id'
+                {...register('transaction_id')}
+              />
               <FormControl>
                 <FormLabel>Amount</FormLabel>
                 <InputGroup>
