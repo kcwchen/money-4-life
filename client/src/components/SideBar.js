@@ -46,7 +46,6 @@ const SideBar = (props) => {
   const handleSignOut = () => {
     Session.destroy().then(() => {
       onSignOut();
-      window.location.href = 'http://localhost:3002';
     });
   };
 
@@ -109,7 +108,6 @@ const SideBar = (props) => {
           open={open}
           icon={FiLogOut}
           title='Sign Out'
-          path='/'
           onClick={handleSignOut}
         />
       </Flex>

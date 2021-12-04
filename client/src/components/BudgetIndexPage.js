@@ -4,12 +4,14 @@ import { Budget, Transaction } from '../requests';
 import AuthContext from '../context/auth-context';
 import { Flex, Box, Heading } from '@chakra-ui/layout';
 import BudgetDetails from './BudgetDetails';
+import { Spinner } from '@chakra-ui/spinner';
 
 const BudgetIndexPage = (props) => {
   // const { currentUser } = props;
   const ctx = useContext(AuthContext);
   const [budgets, setBudgets] = useState([]);
   const [expensesThisMonth, setExpensesThisMonth] = useState({});
+  const [dataReturned, setDataReturned] = useState(false);
 
   const round = (num) => {
     return Math.round((num + Number.EPSILON) * 100) / 100;
@@ -30,6 +32,7 @@ const BudgetIndexPage = (props) => {
           }
         });
         setExpensesThisMonth(expenses);
+        setDataReturned(true);
       });
     });
   }, []);
@@ -43,9 +46,7 @@ const BudgetIndexPage = (props) => {
 
   return (
     <div>
-      {!ctx.user ? (
-        <h1>You haven't made a Budget yet</h1>
-      ) : (
+      {dataReturned ? (
         <>
           <Flex justifyContent='center' mt={10}>
             <Heading as='h1'>
@@ -71,8 +72,17 @@ const BudgetIndexPage = (props) => {
               );
             })}
           </Flex>
-          <NewBudgetForm createBudget={handleNewBudget} />
+          {/* <NewBudgetForm createBudget={handleNewBudget} /> */}
         </>
+      ) : (
+        <Flex w='100%' h='100%' justifyContent='center' alignItems='center'>
+          <Spinner
+            size='xl'
+            thickness='4px'
+            emptyColor='gray.200'
+            color='blue.300'
+          />
+        </Flex>
       )}
     </div>
   );
