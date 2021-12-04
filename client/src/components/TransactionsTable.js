@@ -31,6 +31,8 @@ import {
   FormLabel,
   Radio,
   RadioGroup,
+  InputGroup,
+  InputLeftElement,
 } from '@chakra-ui/react';
 import React, { useState, useMemo } from 'react';
 import { GrFormNext, GrFormPrevious } from 'react-icons/gr';
@@ -46,9 +48,11 @@ import {
   useTable,
 } from 'react-table';
 import { useForm } from 'react-hook-form';
+import { Transaction } from '../requests';
+import { withRouter } from 'react-router-dom';
 
 function TransactionsTable(props) {
-  const { columnsData, tableData } = props;
+  const { columnsData, tableData, onSubmit } = props;
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [value, setValue] = useState('false');
   const {
@@ -56,7 +60,7 @@ function TransactionsTable(props) {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  console.log(value);
+
   const columns = useMemo(() => columnsData, []);
   const data = useMemo(() => tableData, []);
 
@@ -107,78 +111,107 @@ function TransactionsTable(props) {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Add a Transaction</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody pb={6}>
-            <FormControl>
-              <FormLabel>Amount</FormLabel>
-              <Input
-                type='number'
-                step='0.01'
-                placeholder='Amount'
-                {...register('amount')}
-              />
-            </FormControl>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <ModalHeader>Add a Transaction</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody pb={6}>
+              <FormControl>
+                <FormLabel>Amount</FormLabel>
+                <InputGroup>
+                  <InputLeftElement
+                    pointerEvents='none'
+                    color='gray.500'
+                    children='$'
+                  />
+                  <Input
+                    type='number'
+                    step='0.01'
+                    placeholder='Amount'
+                    {...register('amount')}
+                  />
+                </InputGroup>
+              </FormControl>
 
-            <FormControl mt={4}>
-              <FormLabel>Description</FormLabel>
-              <Input
-                type='text'
-                placeholder='Description'
-                {...register('description')}
-              />
-            </FormControl>
+              <FormControl mt={4}>
+                <FormLabel>Description</FormLabel>
+                <Input
+                  type='text'
+                  placeholder='Description'
+                  {...register('description')}
+                />
+              </FormControl>
 
-            <FormControl mt={4}>
-              <FormLabel>Category</FormLabel>
-              <Input
-                type='text'
-                placeholder='Category'
-                {...register('category')}
-              />
-            </FormControl>
+              <FormControl mt={4}>
+                <FormLabel>Category</FormLabel>
+                <Input
+                  type='text'
+                  placeholder='Category'
+                  {...register('category')}
+                />
+              </FormControl>
 
-            <FormControl mt={4}>
-              <FormLabel>Account</FormLabel>
-              <Input
-                type='text'
-                placeholder='Account'
-                {...register('account')}
-              />
-            </FormControl>
+              <FormControl mt={4}>
+                <FormLabel>Account</FormLabel>
+                <Input
+                  type='text'
+                  placeholder='Account'
+                  {...register('account')}
+                />
+              </FormControl>
 
-            <FormControl mt={4}>
-              <FormLabel>Transaction Date</FormLabel>
-              <Input type='date' {...register('transactionDate')} />
-            </FormControl>
-
-            <RadioGroup
-              onChange={setValue}
-              value={value}
-              mt={4}
-              defaultValue='false'
-            >
-              <FormLabel>Subscription</FormLabel>
-              <Stack spacing={5} direction='row'>
-                <Radio value='true'>Yes</Radio>
-                <Radio value='false'>No</Radio>
-              </Stack>
-            </RadioGroup>
-
-            {value === 'true' ? (
               <FormControl mt={4}>
                 <FormLabel>Transaction Date</FormLabel>
-                <Input type='date' {...register('transactionDate')} />
+                <Input type='date' {...register('transaction_date')} />
               </FormControl>
-            ) : null}
-          </ModalBody>
 
-          <ModalFooter>
-            <Button colorScheme='blue' mr={3}>
-              Save
-            </Button>
-            <Button onClick={onClose}>Cancel</Button>
-          </ModalFooter>
+              <FormLabel mt={4}>Subscription</FormLabel>
+              <RadioGroup
+                onChange={setValue}
+                value={value}
+                defaultValue='false'
+                name='is_subscription'
+              >
+                <Radio value='true' mr={5} {...register('is_subscription')}>
+                  Yes
+                </Radio>
+                <Radio value='false' {...register('is_subscription')}>
+                  No
+                </Radio>
+              </RadioGroup>
+
+              {value === 'true' ? (
+                <>
+                  <FormControl mt={4}>
+                    <FormLabel>Subscription Name</FormLabel>
+                    <Input
+                      placeholder='Subscription Name'
+                      type='string'
+                      {...register('subscription_name')}
+                    />
+                  </FormControl>
+
+                  <FormControl mt={4}>
+                    <FormLabel>Billing Period</FormLabel>
+                    <Select {...register('billing_period')}>
+                      <option value='weekly'>Weekly</option>
+                      <option value='biweekly'>Bi-Weekly</option>
+                      <option value='monthly' selected>
+                        Monthly
+                      </option>
+                      <option value='yearly'>Yearly</option>
+                    </Select>
+                  </FormControl>
+                </>
+              ) : null}
+            </ModalBody>
+
+            <ModalFooter>
+              <Button onClick={onClose} type='submit' colorScheme='blue' mr={3}>
+                Save
+              </Button>
+              <Button onClick={onClose}>Cancel</Button>
+            </ModalFooter>
+          </form>
         </ModalContent>
       </Modal>
       <Flex justifyContent='center' mt={10}>
@@ -388,4 +421,4 @@ function TransactionsTable(props) {
   );
 }
 
-export default TransactionsTable;
+export default withRouter(TransactionsTable);

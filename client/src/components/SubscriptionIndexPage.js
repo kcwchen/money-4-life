@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Subscription } from '../requests';
 import { Spinner } from '@chakra-ui/spinner';
-import { Flex } from '@chakra-ui/layout';
+import { Flex, Heading } from '@chakra-ui/layout';
 import AuthContext from '../context/auth-context';
 import SubscriptionDetails from './SubscriptionDetails';
 
@@ -26,6 +26,9 @@ const SubscriptionIndexPage = (props) => {
           justifyContent='center'
           alignItems='center'
         >
+          <Flex justifyContent='center' mt={10}>
+            <Heading as='h1'>Subscriptions</Heading>
+          </Flex>
           {subscriptions.map((subscription) => {
             return (
               <SubscriptionDetails

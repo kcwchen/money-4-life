@@ -9,10 +9,10 @@ class Api::V1::TransactionsController < Api::ApplicationController
   end
 
   def create
-    if params[:is_subscription]
+    if params[:is_subscription] == 'true'
       @subscription = Subscription.find_by name: params[:subscription_name].capitalize, user: current_user
       if !@subscription
-        @subscription = Subscription.create(name: params[:subscription_name].capitalize, billing_period: params[:billing_period], amount: @amount, user: current_user)
+        @subscription = Subscription.create(name: params[:subscription_name].capitalize, billing_period: params[:billing_period].capitalize, amount: @amount, user: current_user)
       end
       transaction = Transaction.new(amount: @amount, description: params[:description], transaction_date: params[:transaction_date], category: @category, account: @account, subscription: @subscription, is_subscription: true)
     else
@@ -45,7 +45,7 @@ class Api::V1::TransactionsController < Api::ApplicationController
   private
 
   def transaction_params
-    @amount = params[:amount] * 100 # amount in cents
+    @amount = params[:amount].to_i * 100 # amount in cents
     @category = Category.find_by name: params[:category].capitalize
     @account = Account.find_by name: params[:account].capitalize, user: current_user
     if !@category

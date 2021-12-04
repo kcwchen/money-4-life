@@ -5,7 +5,7 @@ import TransactionsTable from './TransactionsTable';
 import { Spinner } from '@chakra-ui/spinner';
 import { Flex } from '@chakra-ui/layout';
 
-const TransactionIndexPage = () => {
+const TransactionIndexPage = (props) => {
   const [transactions, setTransactions] = useState([]);
   const [dataReturned, setDataReturned] = useState(false);
   const ctx = useContext(AuthContext);
@@ -44,8 +44,14 @@ const TransactionIndexPage = () => {
   }, []);
 
   const onSubmit = (data) => {
+    setDataReturned(false);
     Transaction.create(data).then(() => {
-      window.location.reload();
+      Transaction.index().then((transactions) => {
+        transactions = transactions.filter((t) => t.user_id === ctx.user.id);
+        setTransactions(transactions);
+        setDataReturned(true);
+      });
+      // props.history.push('/transactions');
     });
   };
 
@@ -74,12 +80,24 @@ const TransactionIndexPage = () => {
           />
         </Flex>
       ) : (
-        <Flex w='100%' h='100%' justifyContent='center' alignItems='center'>
+        <Flex
+          flexDir='column'
+          w='100%'
+          justifyContent='center'
+          alignItems='center'
+        >
           <Spinner
             size='xl'
             thickness='4px'
             emptyColor='gray.200'
             color='blue.300'
+            zIndex='9999'
+            pos='absolute'
+          />
+          <TransactionsTable
+            tableData={transactions}
+            columnsData={columns}
+            onSubmit={onSubmit}
           />
         </Flex>
       )}
