@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import { Transaction } from '../requests';
 import AuthContext from '../context/auth-context';
 import TransactionsTable from './TransactionsTable';
@@ -22,6 +22,12 @@ import {
   Select,
   Input,
   Button,
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialogOverlay,
 } from '@chakra-ui/react';
 import { FiEdit2, FiTrash2 } from 'react-icons/fi';
 import { IconButton } from '@chakra-ui/button';
@@ -30,7 +36,14 @@ import { useForm } from 'react-hook-form';
 const TransactionIndexPage = (props) => {
   const [transactions, setTransactions] = useState([]);
   const [dataReturned, setDataReturned] = useState(false);
+  const [rowValues, setRowValues] = useState({});
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: alertIsOpen,
+    onOpen: alertOnOpen,
+    onClose: alertOnClose,
+  } = useDisclosure();
+  const cancelRef = useRef();
   const ctx = useContext(AuthContext);
   const {
     register,
@@ -73,7 +86,9 @@ const TransactionIndexPage = (props) => {
           </IconButton>
           <IconButton
             icon={<FiTrash2 />}
-            onClick={() => handleDelete(row.original)}
+            onClick={() => {
+              handleDelete(row.original);
+            }}
           >
             Delete
           </IconButton>
@@ -124,8 +139,13 @@ const TransactionIndexPage = (props) => {
   };
 
   const handleDelete = (row) => {
+    setRowValues(row);
+    alertOnOpen();
+  };
+
+  const handleDeleteSubmit = () => {
     setDataReturned(false);
-    Transaction.destroy(row.id).then(() => {
+    Transaction.destroy(rowValues.id).then(() => {
       Transaction.index().then((transactions) => {
         transactions = transactions.filter((t) => t.user_id === ctx.user.id);
         setTransactions(transactions);
@@ -133,7 +153,6 @@ const TransactionIndexPage = (props) => {
       });
     });
   };
-
   return (
     <div>
       <Modal isOpen={isOpen} onClose={onClose}>
@@ -209,6 +228,40 @@ const TransactionIndexPage = (props) => {
           </form>
         </ModalContent>
       </Modal>
+      <AlertDialog
+        isOpen={alertIsOpen}
+        onClose={alertOnClose}
+        leastDestructiveRef={cancelRef}
+      >
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+              Delete Transaction
+            </AlertDialogHeader>
+
+            <AlertDialogBody>
+              Are you sure? You can't undo this action afterwards.
+            </AlertDialogBody>
+
+            <AlertDialogFooter>
+              <Button ref={cancelRef} onClick={alertOnClose}>
+                Cancel
+              </Button>
+              <Button
+                type='submit'
+                colorScheme='red'
+                onClick={() => {
+                  alertOnClose();
+                  handleDeleteSubmit();
+                }}
+                ml={3}
+              >
+                Delete
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
       {dataReturned ? (
         <Flex
           flexDir='column'
