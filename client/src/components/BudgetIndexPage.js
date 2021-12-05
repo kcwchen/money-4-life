@@ -83,14 +83,14 @@ const BudgetIndexPage = (props) => {
   } = useDisclosure();
 
   const getBudgetsAndTransactionsForCurrentMonth = () => {
-    return Budget.index().then((data) => {
+    return Budget.indexQuery(`id=${ctx.user.id}`).then((data) => {
       let total = 0;
-      data = data.filter((b) => b.user_id === ctx.user.id);
+      // data = data.filter((b) => b.user_id === ctx.user.id);
       data.forEach((b) => (total += b.amount));
       setBudgetTotal(total);
       setBudgets(data);
-      Transaction.index().then((transactions) => {
-        transactions = transactions.filter((t) => t.user_id === ctx.user.id);
+      Transaction.indexQuery(`id=${ctx.user.id}`).then((transactions) => {
+        // transactions = transactions.filter((t) => t.user_id === ctx.user.id);
         const expenses = {};
         transactions.forEach((transaction) => {
           transaction.amount = transaction.amount / 100;

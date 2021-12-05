@@ -1,7 +1,15 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Subscription } from '../requests';
 import { Spinner } from '@chakra-ui/spinner';
-import { Flex, Heading } from '@chakra-ui/layout';
+import {
+  Flex,
+  Heading,
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
+} from '@chakra-ui/react';
 import AuthContext from '../context/auth-context';
 import SubscriptionDetails from './SubscriptionDetails';
 
@@ -33,15 +41,33 @@ const SubscriptionIndexPage = (props) => {
               alignItems='center'
               mt={10}
             >
-              {subscriptions.map((subscription) => {
-                return (
-                  <SubscriptionDetails
-                    name={subscription.name}
-                    amount={subscription.amount}
-                    billingPeriod={subscription.billing_period}
-                  />
-                );
-              })}
+              <Tabs>
+                <TabList>
+                  <Tab>Active</Tab>
+                  <Tab>Two</Tab>
+                  <Tab>Three</Tab>
+                </TabList>
+
+                <TabPanels>
+                  <TabPanel>
+                    {subscriptions.map((subscription) => {
+                      return (
+                        <SubscriptionDetails
+                          name={subscription.name}
+                          amount={subscription.amount}
+                          billingPeriod={subscription.billing_period}
+                        />
+                      );
+                    })}
+                  </TabPanel>
+                  <TabPanel>
+                    <p>two!</p>
+                  </TabPanel>
+                  <TabPanel>
+                    <p>three!</p>
+                  </TabPanel>
+                </TabPanels>
+              </Tabs>
             </Flex>
           </Flex>
         </>

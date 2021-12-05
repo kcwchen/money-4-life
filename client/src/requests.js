@@ -44,6 +44,9 @@ export const Budget = {
   index() {
     return fetch(`${baseUrl}/budgets`).then((res) => res.json());
   },
+  indexQuery(query) {
+    return fetch(`${baseUrl}/budgets?${query}`).then((res) => res.json());
+  },
   create(params) {
     return fetch(`${baseUrl}/budgets`, {
       method: 'POST',
@@ -78,6 +81,9 @@ export const Budget = {
 export const Transaction = {
   index() {
     return fetch(`${baseUrl}/transactions`).then((res) => res.json());
+  },
+  indexQuery(query) {
+    return fetch(`${baseUrl}/transactions?${query}`).then((res) => res.json());
   },
   create(params) {
     return fetch(`${baseUrl}/transactions`, {

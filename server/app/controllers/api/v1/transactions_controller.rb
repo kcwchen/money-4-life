@@ -4,7 +4,11 @@ class Api::V1::TransactionsController < Api::ApplicationController
   before_action :authenticate_user!, except: [:index]
 
   def index
-    transactions = Transaction.all.order(transaction_date: :desc)
+    if params[:id]
+      transactions = Transaction.where(user_id: params[:id]).order(transaction_date: :desc)
+    else
+      transactions = Transaction.all.order(transaction_date: :desc)
+    end
     render json: transactions, each_serializer: TransactionCollectionSerializer
   end
 

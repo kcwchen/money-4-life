@@ -100,8 +100,8 @@ const TransactionIndexPage = (props) => {
   ];
 
   const getTransactions = () => {
-    return Transaction.index().then((transactions) => {
-      transactions = transactions.filter((t) => t.user_id === ctx.user.id);
+    return Transaction.indexQuery(`id=${ctx.user.id}`).then((transactions) => {
+      // transactions = transactions.filter((t) => t.user_id === ctx.user.id);
       transactions.forEach((transaction) => {
         transaction.amount = transaction.amount / 100;
         transaction.transaction_date = new Date(
