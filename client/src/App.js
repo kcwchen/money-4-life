@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import AuthContext from './context/auth-context';
-import SignUpPage from './components/SignUpPage';
-import SignInPage from './components/SignInPage';
 import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
 // import SignUp from './components/SignUp';
