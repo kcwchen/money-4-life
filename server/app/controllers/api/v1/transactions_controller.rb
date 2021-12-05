@@ -9,7 +9,6 @@ class Api::V1::TransactionsController < Api::ApplicationController
   end
 
   def create
-    @amount = params[:amount].to_i * 100 # amount in cents
     if params[:is_subscription] == 'true'
       @subscription = Subscription.find_by name: params[:subscription_name].capitalize, user: current_user
       if !@subscription
@@ -28,7 +27,6 @@ class Api::V1::TransactionsController < Api::ApplicationController
   end
 
   def update
-    @amount = params[:amount].to_i
     if @transaction.update(amount: @amount, description: params[:description], transaction_date: params[:transaction_date], category: @category, account: @account)
       render json: {id: @transaction.id}
     else
@@ -47,6 +45,7 @@ class Api::V1::TransactionsController < Api::ApplicationController
   private
 
   def transaction_params
+    @amount = params[:amount].to_i
     @category = Category.find_by name: params[:category].capitalize
     @account = Account.find_by name: params[:account].capitalize, user: current_user
     if !@category

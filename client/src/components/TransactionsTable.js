@@ -192,12 +192,13 @@ function TransactionsTable(props) {
 
                   <FormControl mt={4}>
                     <FormLabel>Billing Period</FormLabel>
-                    <Select {...register('billing_period')}>
+                    <Select
+                      {...register('billing_period')}
+                      defaultValue='monthly'
+                    >
                       <option value='weekly'>Weekly</option>
                       <option value='biweekly'>Bi-Weekly</option>
-                      <option value='monthly' selected>
-                        Monthly
-                      </option>
+                      <option value='monthly'>Monthly</option>
                       <option value='yearly'>Yearly</option>
                     </Select>
                   </FormControl>

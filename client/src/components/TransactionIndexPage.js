@@ -52,10 +52,10 @@ const TransactionIndexPage = (props) => {
   const columns = [
     {
       Header: 'DATE',
-      accessor: 'date',
+      accessor: 'transaction_date',
     },
     {
-      Header: 'AMOUNT',
+      Header: 'AMOUNT ($)',
       accessor: 'amount',
     },
     {
@@ -94,50 +94,48 @@ const TransactionIndexPage = (props) => {
     },
   ];
 
-  useEffect(() => {
-    Transaction.index().then((transactions) => {
+  const getTransactions = () => {
+    return Transaction.index().then((transactions) => {
       transactions = transactions.filter((t) => t.user_id === ctx.user.id);
+      transactions.forEach((transaction) => {
+        console.log(transaction.amount);
+        transaction.amount = transaction.amount / 100;
+        transaction.transaction_date = new Date(
+          transaction.transaction_date
+        ).toLocaleDateString('en-CA', { timeZone: 'UTC' });
+      });
       setTransactions(transactions);
       setDataReturned(true);
     });
-    // if (ctx.user) {
-    //   setTransactions(ctx.user.transactions);
-    // }
+  };
+
+  useEffect(() => {
+    getTransactions();
   }, []);
 
   const onSubmit = (data) => {
     setDataReturned(false);
+    data.amount = data.amount * 100;
     Transaction.create(data).then(() => {
-      Transaction.index().then((transactions) => {
-        transactions = transactions.filter((t) => t.user_id === ctx.user.id);
-        setTransactions(transactions);
-        setDataReturned(true);
-      });
-      // props.history.push('/transactions');
+      getTransactions();
     });
   };
 
   const onEditSubmit = (data) => {
-    console.log(data);
+    data.amount = data.amount * 100;
     setDataReturned(false);
     Transaction.update(data, data.transaction_id).then(() => {
-      Transaction.index().then((transactions) => {
-        transactions = transactions.filter((t) => t.user_id === ctx.user.id);
-        setTransactions(transactions);
-        setDataReturned(true);
-      });
+      getTransactions();
     });
   };
 
   const handleEdit = (row) => {
-    const transactionDate = new Date(row.transaction_date).toLocaleDateString(
-      'en-CA'
-    );
+    console.log(row);
     setValue('amount', `${row.amount}`);
     setValue('description', `${row.description}`);
     setValue('category', `${row.category}`);
     setValue('account', `${row.account}`);
-    setValue('transaction_date', `${transactionDate}`);
+    setValue('transaction_date', `${row.transaction_date}`);
     setValue('transaction_id', `${row.id}`);
     onOpen();
   };
@@ -150,11 +148,7 @@ const TransactionIndexPage = (props) => {
   const handleDeleteSubmit = () => {
     setDataReturned(false);
     Transaction.destroy(rowValues.id).then(() => {
-      Transaction.index().then((transactions) => {
-        transactions = transactions.filter((t) => t.user_id === ctx.user.id);
-        setTransactions(transactions);
-        setDataReturned(true);
-      });
+      getTransactions();
     });
   };
   return (
