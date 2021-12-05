@@ -65,8 +65,8 @@ const BudgetIndexPage = (props) => {
     onClose: alertOnClose,
   } = useDisclosure();
 
-  useEffect(() => {
-    Budget.index().then((data) => {
+  const getBudgetsAndTransactionsForCurrentMonth = () => {
+    return Budget.index().then((data) => {
       data = data.filter((b) => b.user_id === ctx.user.id);
       setBudgets(data);
       Transaction.index().then((transactions) => {
@@ -88,12 +88,16 @@ const BudgetIndexPage = (props) => {
         setDataReturned(true);
       });
     });
+  };
+
+  useEffect(() => {
+    getBudgetsAndTransactionsForCurrentMonth();
   }, []);
 
-  const handleNewBudget = (params) => {
-    Budget.create(params).then((data) => {
-      console.log(data);
-      window.location.reload();
+  const handleNewBudget = (data) => {
+    setDataReturned(false);
+    Budget.create(data).then(() => {
+      getBudgetsAndTransactionsForCurrentMonth();
     });
   };
 
@@ -106,12 +110,7 @@ const BudgetIndexPage = (props) => {
             <ModalHeader>Add Budget Category</ModalHeader>
             <ModalCloseButton />
             <ModalBody pb={6}>
-              <Input
-                type='hidden'
-                name='transaction_id'
-                {...register('transaction_id')}
-              />
-              <FormControl>
+              <FormControl mt={4}>
                 <FormLabel>Amount</FormLabel>
                 <InputGroup>
                   <InputLeftElement
@@ -127,17 +126,6 @@ const BudgetIndexPage = (props) => {
                   />
                 </InputGroup>
               </FormControl>
-
-              <FormControl mt={4}>
-                <FormLabel>Description</FormLabel>
-                <Input
-                  type='text'
-                  placeholder='Description'
-                  name='description'
-                  {...register('description')}
-                />
-              </FormControl>
-
               <FormControl mt={4}>
                 <FormLabel>Category</FormLabel>
                 <Input
@@ -145,25 +133,6 @@ const BudgetIndexPage = (props) => {
                   placeholder='Category'
                   name='category'
                   {...register('category')}
-                />
-              </FormControl>
-
-              <FormControl mt={4}>
-                <FormLabel>Account</FormLabel>
-                <Input
-                  type='text'
-                  placeholder='Account'
-                  name='account'
-                  {...register('account')}
-                />
-              </FormControl>
-
-              <FormControl mt={4}>
-                <FormLabel>Transaction Date</FormLabel>
-                <Input
-                  type='date'
-                  name='transaction_date'
-                  {...register('transaction_date')}
                 />
               </FormControl>
             </ModalBody>
