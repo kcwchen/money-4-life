@@ -1,5 +1,23 @@
 import React from 'react';
-import { Stack, Avatar, Text, Box, Flex } from '@chakra-ui/react';
+import {
+  Stack,
+  Avatar,
+  Text,
+  Box,
+  Flex,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuItemOption,
+  MenuGroup,
+  MenuOptionGroup,
+  MenuIcon,
+  MenuCommand,
+  MenuDivider,
+  IconButton,
+} from '@chakra-ui/react';
+import { FiMoreHorizontal } from 'react-icons/fi';
 
 const SubscriptionDetails = ({ name, amount, billingPeriod }) => {
   return (
@@ -32,6 +50,14 @@ const SubscriptionDetails = ({ name, amount, billingPeriod }) => {
           <Text fontWeight={600}>${amount / 100}</Text>
           <Text color={'gray.500'}>{billingPeriod}</Text>
         </Stack>
+        <Menu>
+          <MenuButton as={IconButton} icon={<FiMoreHorizontal />} />
+          <MenuList>
+            <MenuItem>Edit</MenuItem>
+            <MenuItem>Set Inactive</MenuItem>
+            <MenuItem>Delete</MenuItem>
+          </MenuList>
+        </Menu>
       </Flex>
     </Box>
   );

@@ -120,4 +120,7 @@ export const Subscription = {
   index() {
     return fetch(`${baseUrl}/subscriptions`).then((res) => res.json());
   },
+  indexQuery(query) {
+    return fetch(`${baseUrl}/subscriptions?${query}`).then((res) => res.json());
+  },
 };

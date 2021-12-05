@@ -13,10 +13,9 @@ import { motion, useCycle } from 'framer-motion';
 import {
   FiMenu,
   FiHome,
-  FiCalendar,
-  FiUser,
-  FiBriefcase,
-  FiSettings,
+  FiDollarSign,
+  FiBarChart,
+  FiLayers,
   FiArrowLeft,
   FiLogOut,
 } from 'react-icons/fi';
@@ -105,28 +104,17 @@ const SideBar = (props) => {
         <NavItem open={open} icon={FiHome} title='Budget' path='home' />
         <NavItem
           open={open}
-          icon={FiCalendar}
+          icon={FiDollarSign}
           title='Transactions'
           path='transactions'
         />
         <NavItem
           open={open}
-          icon={FiUser}
+          icon={FiLayers}
           title='Subscriptions'
           path='subscriptions'
         />
-        <NavItem
-          open={open}
-          icon={FiBriefcase}
-          title='Reports'
-          path='reports'
-        />
-        <NavItem
-          open={open}
-          icon={FiSettings}
-          title='Settings'
-          path='settings'
-        />
+        <NavItem open={open} icon={FiBarChart} title='Reports' path='reports' />
         <NavItem
           open={open}
           icon={FiLogOut}

@@ -19,8 +19,8 @@ const SubscriptionIndexPage = (props) => {
   const ctx = useContext(AuthContext);
 
   useEffect(() => {
-    Subscription.index().then((subscriptions) => {
-      subscriptions = subscriptions.filter((s) => s.user_id === ctx.user.id);
+    Subscription.indexQuery(`id=${ctx.user.id}`).then((subscriptions) => {
+      // subscriptions = subscriptions.filter((s) => s.user_id === ctx.user.id);
       setSubscriptions(subscriptions);
       setDataReturned(true);
     });
@@ -41,11 +41,10 @@ const SubscriptionIndexPage = (props) => {
               alignItems='center'
               mt={10}
             >
-              <Tabs>
+              <Tabs isFitted w='100%'>
                 <TabList>
                   <Tab>Active</Tab>
-                  <Tab>Two</Tab>
-                  <Tab>Three</Tab>
+                  <Tab>Inactive</Tab>
                 </TabList>
 
                 <TabPanels>
@@ -61,10 +60,7 @@ const SubscriptionIndexPage = (props) => {
                     })}
                   </TabPanel>
                   <TabPanel>
-                    <p>two!</p>
-                  </TabPanel>
-                  <TabPanel>
-                    <p>three!</p>
+                    <p>Inactive subscriptions go here</p>
                   </TabPanel>
                 </TabPanels>
               </Tabs>
