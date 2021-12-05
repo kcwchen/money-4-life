@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import AuthContext from './context/auth-context';
-import SignIn from './components/SignIn';
-import SignUp from './components/SignUp';
+import SignInPage from './components/SignInPage';
+import SignUpPage from './components/SignUpPage';
 // import SignUp from './components/SignUp';
 import BudgetIndexPage from './components/BudgetIndexPage';
 import TransactionIndexPage from './components/TransactionIndexPage';
@@ -40,14 +40,14 @@ const App = () => {
             exact
             path='/'
             render={(routeProps) => (
-              <SignIn {...routeProps} onSignIn={getCurrentUser} />
+              <SignInPage {...routeProps} onSignIn={getCurrentUser} />
             )}
           />
           <Route
             exact
             path='/sign_up'
             render={(routeProps) => (
-              <SignUp {...routeProps} onSignUp={getCurrentUser} />
+              <SignUpPage {...routeProps} onSignUp={getCurrentUser} />
             )}
           />
           <>
