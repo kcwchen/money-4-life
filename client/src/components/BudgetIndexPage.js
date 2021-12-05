@@ -150,7 +150,7 @@ const BudgetIndexPage = (props) => {
           </form>
         </ModalContent>
       </Modal>
-      {dataReturned && budgets === [] ? (
+      {dataReturned && budgets.length !== 0 ? (
         <>
           <Flex justifyContent='center' mt={10}>
             <Stack align='center'>
@@ -228,8 +228,8 @@ const BudgetIndexPage = (props) => {
         <>
           <Flex justifyContent='center' mt={10}>
             <Stack align='center'>
-              <Heading as='h1'>You don't have a budget yet!</Heading>
-              <Heading as='h2'>Make one Now!</Heading>
+              <Heading as='h1'>You don't have a monthly budget yet!</Heading>
+              <Heading as='h2'>Add a category!</Heading>
             </Stack>
           </Flex>
           <Flex
@@ -237,6 +237,7 @@ const BudgetIndexPage = (props) => {
             flexWrap='wrap'
             alignItems='center'
             justifyContent='center'
+            mt={5}
           >
             <Box
               role={'group'}

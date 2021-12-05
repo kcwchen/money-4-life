@@ -42,9 +42,9 @@ class Api::V1::BudgetsController < Api::ApplicationController
 
   def budget_params
     @amount = params[:amount].to_i * 100 # amount in cents
-    @category = Category.find_by name: params[:category].capitalize
+    @category = Category.find_by name: params[:category].titleize
     if !@category
-      @category = Category.create(name: params[:category].capitalize)
+      @category = Category.create(name: params[:category].titleize)
     end
   end
 end

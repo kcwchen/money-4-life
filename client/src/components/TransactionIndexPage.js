@@ -99,7 +99,6 @@ const TransactionIndexPage = (props) => {
     return Transaction.index().then((transactions) => {
       transactions = transactions.filter((t) => t.user_id === ctx.user.id);
       transactions.forEach((transaction) => {
-        console.log(transaction.amount);
         transaction.amount = transaction.amount / 100;
         transaction.transaction_date = new Date(
           transaction.transaction_date
