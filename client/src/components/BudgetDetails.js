@@ -17,6 +17,7 @@ import {
 } from '@chakra-ui/react';
 
 export default function BudgetDetails(props) {
+  const { handleEdit } = props;
   const [value, setValue] = useState(0);
 
   useEffect(() => {
@@ -92,7 +93,17 @@ export default function BudgetDetails(props) {
           <PopoverArrow />
           <PopoverBody>
             <HStack m={2} spacing={2} justify='center' align='center'>
-              <Button bg='yellow.300' _hover={{ bg: 'yellow.400' }}>
+              <Button
+                bg='yellow.300'
+                _hover={{ bg: 'yellow.400' }}
+                onClick={() => {
+                  handleEdit({
+                    id: props.id,
+                    amount: props.amount,
+                    category: props.category,
+                  });
+                }}
+              >
                 Edit
               </Button>
               <Button bg='red.300' _hover={{ bg: 'red.400' }}>

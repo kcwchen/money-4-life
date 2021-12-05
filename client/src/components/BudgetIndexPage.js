@@ -61,9 +61,9 @@ const BudgetIndexPage = (props) => {
   } = useForm();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
-    isOpen: alertIsOpen,
-    onOpen: alertOnOpen,
-    onClose: alertOnClose,
+    isOpen: editIsOpen,
+    onOpen: editOnOpen,
+    onClose: editOnClose,
   } = useDisclosure();
 
   const getBudgetsAndTransactionsForCurrentMonth = () => {
@@ -103,6 +103,25 @@ const BudgetIndexPage = (props) => {
     Budget.create(data).then(() => {
       getBudgetsAndTransactionsForCurrentMonth();
     });
+  };
+
+  const onEditSubmit = (data) => {
+    console.log(data);
+    data.amount = data.amount * 100;
+    setDataReturned(false);
+    Budget.update(
+      { amount: data.edit_amount, category: data.edit_category },
+      data.budget_id
+    ).then(() => {
+      getBudgetsAndTransactionsForCurrentMonth();
+    });
+  };
+
+  const handleEdit = (data) => {
+    setValue('edit_amount', data.amount);
+    setValue('edit_category', data.category);
+    setValue('budget_id', data.id);
+    editOnOpen();
   };
 
   return (
@@ -150,6 +169,59 @@ const BudgetIndexPage = (props) => {
           </form>
         </ModalContent>
       </Modal>
+      <Modal isOpen={editIsOpen} onClose={editOnClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <form onSubmit={handleSubmit(onEditSubmit)}>
+            <ModalHeader>Edit Budget Category</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody pb={6}>
+              <FormControl mt={4}>
+                <Input
+                  type='hidden'
+                  name='budget_id'
+                  {...register('budget_id')}
+                />
+                <FormLabel>Amount</FormLabel>
+                <InputGroup>
+                  <InputLeftElement
+                    pointerEvents='none'
+                    color='gray.500'
+                    children='$'
+                  />
+                  <Input
+                    name='edit_amount'
+                    type='number'
+                    step='0.01'
+                    {...register('edit_amount')}
+                  />
+                </InputGroup>
+              </FormControl>
+              <FormControl mt={4}>
+                <FormLabel>Category</FormLabel>
+                <Input
+                  type='text'
+                  placeholder='Category'
+                  name='edit_category'
+                  {...register('edit_category')}
+                />
+              </FormControl>
+            </ModalBody>
+
+            <ModalFooter>
+              <Button
+                onClick={editOnClose}
+                type='submit'
+                colorScheme='blue'
+                mr={3}
+              >
+                Save
+              </Button>
+              <Button onClick={editOnClose}>Cancel</Button>
+            </ModalFooter>
+          </form>
+        </ModalContent>
+      </Modal>
       {dataReturned && budgets.length !== 0 ? (
         <>
           <Flex flexDir='column' w='100%' alignItems='center' ml={20} mr={10}>
@@ -176,9 +248,11 @@ const BudgetIndexPage = (props) => {
                   //   ${budget.amount / 100} - {budget.category} - {budget.user_id}
                   // </h3>
                   <BudgetDetails
+                    id={budget.id}
                     amount={budget.amount / 100}
                     category={budget.category}
                     expenses={expensesThisMonth[budget.category]}
+                    handleEdit={handleEdit}
                   />
                 );
               })}

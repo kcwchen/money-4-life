@@ -4,7 +4,7 @@ class Api::V1::BudgetsController < Api::ApplicationController
   before_action :authenticate_user!, except: [:index]
 
   def index
-    budgets = Budget.all
+    budgets = Budget.all.order(created_at: :asc)
     render json: budgets, each_serializer: BudgetCollectionSerializer
   end
 
