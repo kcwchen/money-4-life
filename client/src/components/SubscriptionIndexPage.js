@@ -26,9 +26,9 @@ const SubscriptionIndexPage = (props) => {
               <Heading as='h1'>Subscriptions</Heading>
             </Flex>
             <Flex
-              flexDir='column'
+              flexDir='row'
+              flexWrap='wrap'
               w='100%'
-              justifyContent='center'
               alignItems='center'
               mt={10}
             >
