@@ -31,6 +31,7 @@ import {
   AlertDialogHeader,
   AlertDialogContent,
   AlertDialogOverlay,
+  useToast,
 } from '@chakra-ui/react';
 import BudgetDetails from './BudgetDetails';
 import { Spinner } from '@chakra-ui/spinner';
@@ -45,8 +46,10 @@ const BudgetIndexPage = (props) => {
   const [dataReturned, setDataReturned] = useState(false);
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
   const [budgetTotal, setBudgetTotal] = useState(0);
-  const [bidToDelete, setBidToDelete] = useState(null);
+  const [budgetToDelete, setBudgetToDelete] = useState(null);
   const cancelRef = useRef();
+  const [toastMessage, setToastMessage] = useState(undefined);
+  const toast = useToast();
   const months = [
     'January',
     'February',
@@ -111,11 +114,25 @@ const BudgetIndexPage = (props) => {
     getBudgetsAndTransactionsForCurrentMonth();
   }, []);
 
+  useEffect(() => {
+    if (toastMessage) {
+      const { title } = toastMessage;
+
+      toast({
+        title,
+        status: 'success',
+        duration: 9000,
+        isClosable: true,
+      });
+    }
+  }, [toastMessage, toast]);
+
   const handleNewBudget = (data) => {
     setDataReturned(false);
     Budget.create(data).then(() => {
       getBudgetsAndTransactionsForCurrentMonth();
     });
+    setToastMessage({ title: `${data.category} budget created` });
   };
 
   const onEditSubmit = (data) => {
@@ -128,6 +145,7 @@ const BudgetIndexPage = (props) => {
     ).then(() => {
       getBudgetsAndTransactionsForCurrentMonth();
     });
+    setToastMessage({ title: `${data.edit_category} budget updated` });
   };
 
   const handleEdit = (data) => {
@@ -139,13 +157,14 @@ const BudgetIndexPage = (props) => {
 
   const handleDeleteSubmit = () => {
     setDataReturned(false);
-    Budget.destroy(bidToDelete).then(() => {
+    Budget.destroy(budgetToDelete.bid).then(() => {
       getBudgetsAndTransactionsForCurrentMonth();
     });
+    setToastMessage({ title: `${budgetToDelete.category} budget deleted` });
   };
 
-  const handleDelete = (bid) => {
-    setBidToDelete(bid);
+  const handleDelete = (budget) => {
+    setBudgetToDelete(budget);
     alertOnOpen();
   };
 

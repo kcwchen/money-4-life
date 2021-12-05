@@ -110,7 +110,11 @@ export default function BudgetDetails(props) {
                 bg='red.300'
                 _hover={{ bg: 'red.400' }}
                 onClick={() => {
-                  handleDelete(props.id);
+                  handleDelete({
+                    bid: props.id,
+                    amount: props.amount,
+                    category: props.category,
+                  });
                 }}
               >
                 Delete
