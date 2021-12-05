@@ -17,6 +17,7 @@ const SubscriptionIndexPage = (props) => {
       setDataReturned(true);
     });
   }, []);
+
   return (
     <>
       {dataReturned ? (

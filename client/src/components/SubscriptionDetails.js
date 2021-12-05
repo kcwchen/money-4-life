@@ -1,14 +1,5 @@
 import React from 'react';
-import {
-  Stack,
-  Avatar,
-  Text,
-  Box,
-  Center,
-  useColorModeValue,
-  Flex,
-  Heading,
-} from '@chakra-ui/react';
+import { Stack, Avatar, Text, Box, Flex } from '@chakra-ui/react';
 
 const SubscriptionDetails = ({ name, amount, billingPeriod }) => {
   return (

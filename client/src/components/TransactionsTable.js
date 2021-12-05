@@ -48,7 +48,6 @@ import {
   useTable,
 } from 'react-table';
 import { useForm } from 'react-hook-form';
-import { Transaction } from '../requests';
 import { withRouter } from 'react-router-dom';
 
 function TransactionsTable(props) {
@@ -346,52 +345,32 @@ function TransactionsTable(props) {
             >
               <Icon as={GrFormPrevious} w='16px' h='16px' color='gray.400' />
             </Button>
-            {
-              // pageSize === 5 ? (
-              //   <NumberInput
-              //     max={pageCount - 1}
-              //     min={1}
-              //     w='75px'
-              //     mx='6px'
-              //     defaultValue='1'
-              //     onChange={(e) => gotoPage(e)}
-              //   >
-              //     <NumberInputField />
-              //     <NumberInputStepper>
-              //       <NumberIncrementStepper onClick={() => nextPage()} />
-              //       <NumberDecrementStepper onClick={() => previousPage()} />
-              //     </NumberInputStepper>
-              //   </NumberInput>
-              // ) :
-              //  (
-              createPages(pageCount).map((pageNumber) => {
-                return (
-                  <Button
-                    variant='no-hover'
-                    transition='all .5s ease'
-                    onClick={() => gotoPage(pageNumber - 1)}
-                    w='40px'
-                    h='40px'
-                    borderRadius='160px'
-                    bg={pageNumber === pageIndex + 1 ? 'teal.300' : '#fff'}
-                    border='1px solid lightgray'
-                    _hover={{
-                      bg: 'gray.200',
-                      opacity: '0.7',
-                      borderColor: 'gray.500',
-                    }}
+            {createPages(pageCount).map((pageNumber) => {
+              return (
+                <Button
+                  variant='no-hover'
+                  transition='all .5s ease'
+                  onClick={() => gotoPage(pageNumber - 1)}
+                  w='40px'
+                  h='40px'
+                  borderRadius='160px'
+                  bg={pageNumber === pageIndex + 1 ? 'green.600' : '#fff'}
+                  border='1px solid lightgray'
+                  _hover={{
+                    bg: 'gray.200',
+                    opacity: '0.7',
+                    borderColor: 'gray.500',
+                  }}
+                >
+                  <Text
+                    fontSize='xs'
+                    color={pageNumber === pageIndex + 1 ? '#fff' : 'gray.600'}
                   >
-                    <Text
-                      fontSize='xs'
-                      color={pageNumber === pageIndex + 1 ? '#fff' : 'gray.600'}
-                    >
-                      {pageNumber}
-                    </Text>
-                  </Button>
-                );
-              })
-              // )
-            }
+                    {pageNumber}
+                  </Text>
+                </Button>
+              );
+            })}
             <Button
               variant='no-hover'
               onClick={() => nextPage()}
