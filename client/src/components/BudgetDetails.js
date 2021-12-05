@@ -9,7 +9,25 @@ import {
   CircularProgress,
   CircularProgressLabel,
   Tooltip,
+  HStack,
+  Icon,
+  Button,
+  IconButton,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuItemOption,
+  MenuGroup,
+  MenuOptionGroup,
+  MenuIcon,
+  MenuCommand,
+  MenuDivider,
+  Portal,
+  Divider,
 } from '@chakra-ui/react';
+import { FiMoreHorizontal } from 'react-icons/fi';
+import { GrWifiNone } from 'react-icons/gr';
 
 export default function BudgetDetails(props) {
   const [value, setValue] = useState(0);
@@ -25,15 +43,39 @@ export default function BudgetDetails(props) {
         p={6}
         maxW={'330px'}
         w={'full'}
-        bg={useColorModeValue('white', 'gray.800')}
+        // bg={useColorModeValue('white', 'gray.800')}
         boxShadow={'xl'}
         rounded={'lg'}
-        pos={'relative'}
-        zIndex={1}
-        _hover={{ transform: 'scale(1.2)' }}
+        // pos={'relative'}
+        // zIndex='dropdown'
+        _hover={{ transform: 'scale(1.1)' }}
         transition='all 0.5s ease'
+        display='flex'
+        flexDir='column'
       >
-        <Stack align={'center'}>
+        <Menu>
+          <MenuButton
+            as={IconButton}
+            bg='transparent'
+            alignSelf='flex-end'
+            icon={<FiMoreHorizontal />}
+          ></MenuButton>
+          {/* <Portal> */}
+          <MenuList>
+            <MenuItem>Download</MenuItem>
+            <MenuItem>Create a Copy</MenuItem>
+            <MenuItem>Mark as Draft</MenuItem>
+            <MenuItem>Delete</MenuItem>
+            <MenuItem>Attend a Workshop</MenuItem>
+          </MenuList>
+          {/* </Portal> */}
+        </Menu>
+
+        <Stack
+          align={'center'}
+          _hover={{ transform: 'scale(1.1)' }}
+          transition='all 0.5s ease'
+        >
           <CircularProgress
             size='250px'
             transition='all 0.5s ease'
@@ -45,9 +87,25 @@ export default function BudgetDetails(props) {
             }
             _hover={{ scale: 2 }}
           >
-            <Tooltip label={`$${props.expenses || 0} / $${props.amount}`}>
+            <Tooltip
+              label={`$${(
+                props.amount.toFixed(2) -
+                (props.expenses ? props.expenses.toFixed(2) : 0)
+              ).toFixed(2)} Remaining`}
+            >
               <CircularProgressLabel fontSize='30'>
-                ${props.amount}
+                ${props.expenses ? props.expenses.toFixed(2) : 0}{' '}
+                <hr
+                  style={{
+                    width: '50%',
+                    marginRight: '25%',
+                    marginLeft: '25%',
+                    border: 'none',
+                    height: '1px',
+                    backgroundColor: '#333',
+                  }}
+                />
+                ${props.amount.toFixed(2)}
               </CircularProgressLabel>
             </Tooltip>
           </CircularProgress>
