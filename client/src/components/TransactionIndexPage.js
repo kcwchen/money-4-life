@@ -25,6 +25,8 @@ import {
   AlertDialogHeader,
   AlertDialogContent,
   AlertDialogOverlay,
+  useToast,
+  Heading,
 } from '@chakra-ui/react';
 import { FiEdit2, FiTrash2 } from 'react-icons/fi';
 import { IconButton } from '@chakra-ui/button';
@@ -35,6 +37,8 @@ const TransactionIndexPage = (props) => {
   const [dataReturned, setDataReturned] = useState(false);
   const [rowValues, setRowValues] = useState({});
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [toastMessage, setToastMessage] = useState(undefined);
+  const toast = useToast();
   const {
     isOpen: alertIsOpen,
     onOpen: alertOnOpen,
@@ -119,7 +123,21 @@ const TransactionIndexPage = (props) => {
     Transaction.create(data).then(() => {
       getTransactions();
     });
+    setToastMessage({ title: 'Transaction created' });
   };
+
+  useEffect(() => {
+    if (toastMessage) {
+      const { title } = toastMessage;
+
+      toast({
+        title,
+        status: 'success',
+        duration: 9000,
+        isClosable: true,
+      });
+    }
+  }, [toastMessage, toast]);
 
   const onEditSubmit = (data) => {
     data.amount = data.amount * 100;
@@ -127,6 +145,7 @@ const TransactionIndexPage = (props) => {
     Transaction.update(data, data.transaction_id).then(() => {
       getTransactions();
     });
+    setToastMessage({ title: 'Transaction updated' });
   };
 
   const handleEdit = (row) => {
@@ -150,7 +169,9 @@ const TransactionIndexPage = (props) => {
     Transaction.destroy(rowValues.id).then(() => {
       getTransactions();
     });
+    setToastMessage({ title: 'Transaction deleted' });
   };
+
   return (
     <div>
       <Modal isOpen={isOpen} onClose={onClose}>

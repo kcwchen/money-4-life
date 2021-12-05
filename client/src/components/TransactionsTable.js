@@ -215,7 +215,7 @@ function TransactionsTable(props) {
           </form>
         </ModalContent>
       </Modal>
-      <Flex justifyContent='center' mt={10}>
+      <Flex w='100%' justifyContent='center' mt={10}>
         <Heading as='h1'>Transactions</Heading>
       </Flex>
       <Flex direction='column' w='100%' mt={10} mb={10}>

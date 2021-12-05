@@ -42,11 +42,11 @@ export default function BudgetDetails(props) {
             maxW={'330px'}
             w={'full'}
             // bg={useColorModeValue('white', 'gray.800')}
-            boxShadow={'xl'}
+            boxShadow={'md'}
             rounded={'lg'}
             // pos={'relative'}
             // zIndex='dropdown'
-            _hover={{ transform: 'scale(1.1)' }}
+            _hover={{ transform: 'scale(1.1)', boxShadow: 'xl' }}
             transition='all 0.5s ease'
             display='flex'
             flexDir='column'
