@@ -77,6 +77,7 @@ const TransactionIndexPage = (props) => {
         <div>
           <IconButton
             icon={<FiEdit2 />}
+            mr={1}
             onClick={() => handleEdit(row.original)}
           >
             Edit
