@@ -38,6 +38,7 @@ const BudgetIndexPage = (props) => {
   const [expensesThisMonth, setExpensesThisMonth] = useState({});
   const [dataReturned, setDataReturned] = useState(false);
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
+  const [budgetTotal, setBudgetTotal] = useState(0);
   const months = [
     'January',
     'February',
@@ -67,7 +68,10 @@ const BudgetIndexPage = (props) => {
 
   const getBudgetsAndTransactionsForCurrentMonth = () => {
     return Budget.index().then((data) => {
+      let total = 0;
       data = data.filter((b) => b.user_id === ctx.user.id);
+      data.forEach((b) => (total += b.amount));
+      setBudgetTotal(total);
       setBudgets(data);
       Transaction.index().then((transactions) => {
         transactions = transactions.filter((t) => t.user_id === ctx.user.id);
@@ -146,12 +150,12 @@ const BudgetIndexPage = (props) => {
           </form>
         </ModalContent>
       </Modal>
-      {dataReturned ? (
+      {dataReturned && budgets === [] ? (
         <>
           <Flex justifyContent='center' mt={10}>
             <Stack align='center'>
               <Heading as='h1'>
-                Your Total Monthly Budget is ${ctx.user.total_budget / 100}
+                Your Total Monthly Budget is ${budgetTotal / 100}
               </Heading>
               <Heading as='h2'>
                 for {months[currentMonth]} {new Date().getFullYear()}
@@ -219,7 +223,64 @@ const BudgetIndexPage = (props) => {
               </Stack>
             </Box>
           </Flex>
-          {/* <NewBudgetForm createBudget={handleNewBudget} /> */}
+        </>
+      ) : dataReturned ? (
+        <>
+          <Flex justifyContent='center' mt={10}>
+            <Stack align='center'>
+              <Heading as='h1'>You don't have a budget yet!</Heading>
+              <Heading as='h2'>Make one Now!</Heading>
+            </Stack>
+          </Flex>
+          <Flex
+            flexDir='row'
+            flexWrap='wrap'
+            alignItems='center'
+            justifyContent='center'
+          >
+            <Box
+              role={'group'}
+              p={6}
+              maxW={'330px'}
+              w={'full'}
+              // boxShadow={'2xl'}
+              rounded={'lg'}
+              pos={'relative'}
+              zIndex={1}
+              _hover={{ transform: 'scale(1.2)' }}
+              transition='all 0.5s ease'
+              onClick={onOpen}
+              cursor='pointer'
+            >
+              <Stack align={'center'}>
+                <CircularProgress
+                  size='250px'
+                  transition='all 0.5s ease'
+                  value={0}
+                  color={
+                    ((props.expenses || 0) / props.amount) * 100 > 100
+                      ? 'red.300'
+                      : 'blue.300'
+                  }
+                  _hover={{ scale: 2 }}
+                >
+                  <Tooltip label='Add Category'>
+                    <CircularProgressLabel fontSize='30'>
+                      <Icon as={FiPlus} boxSize={36} color='gray.300' />
+                    </CircularProgressLabel>
+                  </Tooltip>
+                </CircularProgress>
+                <Heading
+                  fontSize={'2xl'}
+                  fontFamily={'body'}
+                  fontWeight={500}
+                  visibility='hidden'
+                >
+                  Add Budget
+                </Heading>
+              </Stack>
+            </Box>
+          </Flex>
         </>
       ) : (
         <Flex w='100%' h='100%' justifyContent='center' alignItems='center'>

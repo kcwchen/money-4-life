@@ -4,6 +4,7 @@ import AuthContext from './context/auth-context';
 import SignUpPage from './components/SignUpPage';
 import SignInPage from './components/SignInPage';
 import SignIn from './components/SignIn';
+import SignUp from './components/SignUp';
 // import SignUp from './components/SignUp';
 import BudgetIndexPage from './components/BudgetIndexPage';
 import TransactionIndexPage from './components/TransactionIndexPage';
@@ -48,7 +49,7 @@ const App = () => {
             exact
             path='/sign_up'
             render={(routeProps) => (
-              <SignUpPage {...routeProps} onSignUp={getCurrentUser} />
+              <SignUp {...routeProps} onSignUp={getCurrentUser} />
             )}
           />
           <>

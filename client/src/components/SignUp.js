@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Session } from '../requests';
+import { User } from '../requests';
 import { Link as ReactLink } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import {
@@ -14,11 +14,12 @@ import {
   Heading,
   Text,
   useColorModeValue,
+  HStack,
 } from '@chakra-ui/react';
 
-export default function SignIn(props) {
+export default function SignUp(props) {
   const [isLoading, setIsLoading] = useState(false);
-  const { onSignIn } = props;
+  const { onSignUp } = props;
   const {
     register,
     handleSubmit,
@@ -34,9 +35,9 @@ export default function SignIn(props) {
     //   password: formData.get('password'),
     // };
     // console.log(params);
-    Session.create(data).then((user) => {
+    User.create(data).then((user) => {
       if (user?.id) {
-        onSignIn();
+        onSignUp();
         setTimeout(() => {
           props.history.push('home');
         }, 2000);
@@ -53,9 +54,9 @@ export default function SignIn(props) {
     >
       <Stack spacing={8} mx={'auto'} maxW={'xl'} py={12} px={6}>
         <Stack align={'center'}>
-          <Heading fontSize={'4xl'}>Welcome to Money 4 Life</Heading>
+          <Heading fontSize={'4xl'}>Get started with Money 4 Life</Heading>
           <Text fontSize={'lg'} color={'gray.600'}>
-            Sign in to your account!
+            Sign up for a free account!
           </Text>
         </Stack>
         <Box
@@ -66,19 +67,43 @@ export default function SignIn(props) {
         >
           <form onSubmit={handleSubmit(onSubmit)}>
             <Stack spacing={4}>
-              <FormControl id='email'>
+              <HStack>
+                <Box>
+                  <FormControl id='firstName' isRequired>
+                    <FormLabel>First Name</FormLabel>
+                    <Input
+                      name='first_name'
+                      type='text'
+                      {...register('first_name')}
+                    />
+                  </FormControl>
+                </Box>
+                <Box>
+                  <FormControl id='lastName'>
+                    <FormLabel>Last Name</FormLabel>
+                    <Input
+                      name='last_name'
+                      type='text'
+                      {...register('last_name')}
+                    />
+                  </FormControl>
+                </Box>
+              </HStack>
+              <FormControl id='email' isRequired>
                 <FormLabel>Email address</FormLabel>
                 <Input
                   type='email'
+                  name='email'
                   placeholder='Email'
                   {...register('email')}
                 />
                 {errors.email}
               </FormControl>
-              <FormControl id='password'>
+              <FormControl id='password' isRequired>
                 <FormLabel>Password</FormLabel>
                 <Input
                   type='password'
+                  name='password'
                   placeholder='Password'
                   {...register('password')}
                 />
@@ -94,7 +119,7 @@ export default function SignIn(props) {
                   }}
                   type='submit'
                 >
-                  Sign In
+                  Sign Up
                 </Button>
               </Stack>
             </Stack>
@@ -102,9 +127,9 @@ export default function SignIn(props) {
         </Box>
         <Box align='center'>
           <Text fontSize={'lg'} color={'gray.600'}>
-            Don't have an account?{' '}
-            <Link as={ReactLink} to='/sign_up' color={'blue.400'}>
-              Sign Up!
+            Already have an account?{' '}
+            <Link as={ReactLink} to='/sign_in' color={'blue.400'}>
+              Sign In!
             </Link>
           </Text>
         </Box>
