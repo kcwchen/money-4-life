@@ -2,28 +2,19 @@ import React, { useState, useEffect } from 'react';
 import {
   Box,
   Center,
-  useColorModeValue,
   Heading,
-  Text,
   Stack,
   CircularProgress,
   CircularProgressLabel,
   Tooltip,
   HStack,
-  Icon,
   Button,
-  IconButton,
   Popover,
   PopoverTrigger,
   PopoverContent,
-  PopoverHeader,
   PopoverBody,
-  PopoverFooter,
   PopoverArrow,
-  PopoverCloseButton,
 } from '@chakra-ui/react';
-import { FiMoreHorizontal } from 'react-icons/fi';
-import { GrWifiNone } from 'react-icons/gr';
 
 export default function BudgetDetails(props) {
   const [value, setValue] = useState(0);
@@ -41,11 +32,8 @@ export default function BudgetDetails(props) {
             p={6}
             maxW={'330px'}
             w={'full'}
-            // bg={useColorModeValue('white', 'gray.800')}
             boxShadow={'md'}
             rounded={'lg'}
-            // pos={'relative'}
-            // zIndex='dropdown'
             _hover={{
               transform: 'scale(1.1)',
               boxShadow: 'xl',
@@ -56,22 +44,6 @@ export default function BudgetDetails(props) {
             flexDir='column'
             cursor='pointer'
           >
-            {/* <Menu>
-          <MenuButton
-            as={IconButton}
-            bg='transparent'
-            alignSelf='flex-end'
-            icon={<FiMoreHorizontal />}
-          ></MenuButton>
-          <MenuList>
-            <MenuItem>Download</MenuItem>
-            <MenuItem>Create a Copy</MenuItem>
-            <MenuItem>Mark as Draft</MenuItem>
-            <MenuItem>Delete</MenuItem>
-            <MenuItem>Attend a Workshop</MenuItem>
-          </MenuList>
-        </Menu> */}
-
             <Stack
               align={'center'}
               // _hover={{ transform: 'scale(1.1)' }}

@@ -20,25 +20,30 @@ const SubscriptionIndexPage = (props) => {
   return (
     <>
       {dataReturned ? (
-        <Flex
-          flexDir='column'
-          w='100%'
-          justifyContent='center'
-          alignItems='center'
-        >
-          <Flex justify='flex-start' mt={10}>
-            <Heading as='h1'>Subscriptions</Heading>
+        <>
+          <Flex flexDir='column' w='100%' alignItems='center' ml={20} mr={10}>
+            <Flex w='100%' justifyContent='flex-start' mt={10}>
+              <Heading as='h1'>Subscriptions</Heading>
+            </Flex>
+            <Flex
+              flexDir='column'
+              w='100%'
+              justifyContent='center'
+              alignItems='center'
+              mt={10}
+            >
+              {subscriptions.map((subscription) => {
+                return (
+                  <SubscriptionDetails
+                    name={subscription.name}
+                    amount={subscription.amount}
+                    billingPeriod={subscription.billing_period}
+                  />
+                );
+              })}
+            </Flex>
           </Flex>
-          {subscriptions.map((subscription) => {
-            return (
-              <SubscriptionDetails
-                name={subscription.name}
-                amount={subscription.amount}
-                billingPeriod={subscription.billing_period}
-              />
-            );
-          })}
-        </Flex>
+        </>
       ) : (
         <Flex w='100%' h='100%' justifyContent='center' alignItems='center'>
           <Spinner

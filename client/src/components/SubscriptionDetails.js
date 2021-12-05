@@ -4,6 +4,7 @@ import {
   Avatar,
   Text,
   Box,
+  Center,
   useColorModeValue,
   Flex,
   Heading,
