@@ -7,6 +7,7 @@ import {
   Menu,
   MenuButton,
   Box,
+  Tooltip,
 } from '@chakra-ui/react';
 import { NavLink, useLocation } from 'react-router-dom';
 
@@ -38,64 +39,68 @@ const NavItem = ({ icon, title, open, path, onClick }) => {
     >
       <Menu placement='right'>
         {title === 'Sign Out' ? (
-          <Box
-            onClick={onClick}
-            backgroundColor={active[`${path}`] && '#000'}
-            p={3}
-            borderRadius={8}
-            _hover={{
-              textDecor: 'none',
-              backgroundColor: active[`${path}`] ? '#000' : 'gray.200',
-            }}
-            w={open && '100%'}
-          >
-            <MenuButton w='100%'>
-              <Flex>
-                <Icon
-                  as={icon}
-                  fontSize='xl'
-                  color={active[`${path}`] ? '#82AAAD' : 'gray.500'}
-                />
-                <Text
-                  ml={5}
-                  color={active[`${path}`] ? '#FFF' : '#000'}
-                  display={open ? 'flex' : 'none'}
-                >
-                  {title}
-                </Text>
-              </Flex>
-            </MenuButton>
-          </Box>
+          <Tooltip label={open ? '' : 'Sign Out'} hasArrow placement='right'>
+            <Box
+              onClick={onClick}
+              backgroundColor={active[`${path}`] && '#000'}
+              p={3}
+              borderRadius={8}
+              _hover={{
+                textDecor: 'none',
+                backgroundColor: active[`${path}`] ? '#000' : 'gray.200',
+              }}
+              w={open && '100%'}
+            >
+              <MenuButton w='100%'>
+                <Flex>
+                  <Icon
+                    as={icon}
+                    fontSize='xl'
+                    color={active[`${path}`] ? '#82AAAD' : 'gray.500'}
+                  />
+                  <Text
+                    ml={5}
+                    color={active[`${path}`] ? '#FFF' : '#000'}
+                    display={open ? 'flex' : 'none'}
+                  >
+                    {title}
+                  </Text>
+                </Flex>
+              </MenuButton>
+            </Box>
+          </Tooltip>
         ) : (
-          <Link
-            as={NavLink}
-            to={path}
-            backgroundColor={active[`${path}`] && '#000'}
-            p={3}
-            borderRadius={8}
-            _hover={{
-              textDecor: 'none',
-              backgroundColor: active[`${path}`] ? '#000' : 'gray.200',
-            }}
-            w={open && '100%'}
-          >
-            <MenuButton w='100%'>
-              <Flex>
-                <Icon
-                  as={icon}
-                  fontSize='xl'
-                  color={active[`${path}`] ? '#82AAAD' : 'gray.500'}
-                />
-                <Text
-                  ml={5}
-                  color={active[`${path}`] ? '#FFF' : '#000'}
-                  display={open ? 'flex' : 'none'}
-                >
-                  {title}
-                </Text>
-              </Flex>
-            </MenuButton>
-          </Link>
+          <Tooltip label={open ? '' : title} hasArrow placement='right'>
+            <Link
+              as={NavLink}
+              to={path}
+              backgroundColor={active[`${path}`] && '#000'}
+              p={3}
+              borderRadius={8}
+              _hover={{
+                textDecor: 'none',
+                backgroundColor: active[`${path}`] ? '#000' : 'gray.200',
+              }}
+              w={open && '100%'}
+            >
+              <MenuButton w='100%'>
+                <Flex>
+                  <Icon
+                    as={icon}
+                    fontSize='xl'
+                    color={active[`${path}`] ? '#82AAAD' : 'gray.500'}
+                  />
+                  <Text
+                    ml={5}
+                    color={active[`${path}`] ? '#FFF' : '#000'}
+                    display={open ? 'flex' : 'none'}
+                  >
+                    {title}
+                  </Text>
+                </Flex>
+              </MenuButton>
+            </Link>
+          </Tooltip>
         )}
       </Menu>
     </Flex>

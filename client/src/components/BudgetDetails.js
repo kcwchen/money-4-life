@@ -46,7 +46,11 @@ export default function BudgetDetails(props) {
             rounded={'lg'}
             // pos={'relative'}
             // zIndex='dropdown'
-            _hover={{ transform: 'scale(1.1)', boxShadow: 'xl' }}
+            _hover={{
+              transform: 'scale(1.1)',
+              boxShadow: 'xl',
+              border: '1px solid blue',
+            }}
             transition='all 0.5s ease'
             display='flex'
             flexDir='column'
