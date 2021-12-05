@@ -18,7 +18,7 @@ const SubscriptionIndexPage = (props) => {
     });
   }, []);
   return (
-    <div>
+    <>
       {dataReturned ? (
         <Flex
           flexDir='column'
@@ -26,7 +26,7 @@ const SubscriptionIndexPage = (props) => {
           justifyContent='center'
           alignItems='center'
         >
-          <Flex justifyContent='center' mt={10}>
+          <Flex justify='flex-start' mt={10}>
             <Heading as='h1'>Subscriptions</Heading>
           </Flex>
           {subscriptions.map((subscription) => {
@@ -49,7 +49,7 @@ const SubscriptionIndexPage = (props) => {
           />
         </Flex>
       )}
-    </div>
+    </>
   );
 };
 

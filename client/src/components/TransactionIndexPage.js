@@ -173,7 +173,7 @@ const TransactionIndexPage = (props) => {
   };
 
   return (
-    <div>
+    <>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
@@ -290,8 +290,10 @@ const TransactionIndexPage = (props) => {
         <Flex
           flexDir='column'
           w='100%'
-          justifyContent='center'
+          // justifyContent='center'
           alignItems='center'
+          ml={20}
+          mr={10}
         >
           <TransactionsTable
             tableData={transactions}
@@ -305,6 +307,8 @@ const TransactionIndexPage = (props) => {
           w='100%'
           justifyContent='center'
           alignItems='center'
+          ml={20}
+          mr={10}
         >
           <Spinner
             size='xl'
@@ -314,14 +318,16 @@ const TransactionIndexPage = (props) => {
             zIndex='9999'
             pos='absolute'
           />
-          <TransactionsTable
-            tableData={transactions}
-            columnsData={columns}
-            onSubmit={onSubmit}
-          />
+          {transactions.length === 0 ? null : (
+            <TransactionsTable
+              tableData={transactions}
+              columnsData={columns}
+              onSubmit={onSubmit}
+            />
+          )}
         </Flex>
       )}
-    </div>
+    </>
   );
 };
 
