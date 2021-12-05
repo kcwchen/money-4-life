@@ -17,7 +17,7 @@ import {
 } from '@chakra-ui/react';
 
 export default function BudgetDetails(props) {
-  const { handleEdit } = props;
+  const { handleEdit, handleDelete } = props;
   const [value, setValue] = useState(0);
 
   useEffect(() => {
@@ -106,7 +106,13 @@ export default function BudgetDetails(props) {
               >
                 Edit
               </Button>
-              <Button bg='red.300' _hover={{ bg: 'red.400' }}>
+              <Button
+                bg='red.300'
+                _hover={{ bg: 'red.400' }}
+                onClick={() => {
+                  handleDelete(props.id);
+                }}
+              >
                 Delete
               </Button>
             </HStack>

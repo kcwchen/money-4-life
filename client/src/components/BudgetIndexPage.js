@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import NewBudgetForm from './NewBudgetForm';
 import { Budget, Transaction } from '../requests';
 import AuthContext from '../context/auth-context';
@@ -25,6 +25,12 @@ import {
   InputGroup,
   InputLeftElement,
   Button,
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialogOverlay,
 } from '@chakra-ui/react';
 import BudgetDetails from './BudgetDetails';
 import { Spinner } from '@chakra-ui/spinner';
@@ -39,6 +45,8 @@ const BudgetIndexPage = (props) => {
   const [dataReturned, setDataReturned] = useState(false);
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
   const [budgetTotal, setBudgetTotal] = useState(0);
+  const [bidToDelete, setBidToDelete] = useState(null);
+  const cancelRef = useRef();
   const months = [
     'January',
     'February',
@@ -64,6 +72,11 @@ const BudgetIndexPage = (props) => {
     isOpen: editIsOpen,
     onOpen: editOnOpen,
     onClose: editOnClose,
+  } = useDisclosure();
+  const {
+    isOpen: alertIsOpen,
+    onOpen: alertOnOpen,
+    onClose: alertOnClose,
   } = useDisclosure();
 
   const getBudgetsAndTransactionsForCurrentMonth = () => {
@@ -122,6 +135,18 @@ const BudgetIndexPage = (props) => {
     setValue('edit_category', data.category);
     setValue('budget_id', data.id);
     editOnOpen();
+  };
+
+  const handleDeleteSubmit = () => {
+    setDataReturned(false);
+    Budget.destroy(bidToDelete).then(() => {
+      getBudgetsAndTransactionsForCurrentMonth();
+    });
+  };
+
+  const handleDelete = (bid) => {
+    setBidToDelete(bid);
+    alertOnOpen();
   };
 
   return (
@@ -222,6 +247,40 @@ const BudgetIndexPage = (props) => {
           </form>
         </ModalContent>
       </Modal>
+      <AlertDialog
+        isOpen={alertIsOpen}
+        onClose={alertOnClose}
+        leastDestructiveRef={cancelRef}
+      >
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+              Delete Budget Category
+            </AlertDialogHeader>
+
+            <AlertDialogBody>
+              Are you sure? You can't undo this action afterwards.
+            </AlertDialogBody>
+
+            <AlertDialogFooter>
+              <Button ref={cancelRef} onClick={alertOnClose}>
+                Cancel
+              </Button>
+              <Button
+                type='submit'
+                colorScheme='red'
+                onClick={() => {
+                  alertOnClose();
+                  handleDeleteSubmit();
+                }}
+                ml={3}
+              >
+                Delete
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
       {dataReturned && budgets.length !== 0 ? (
         <>
           <Flex flexDir='column' w='100%' alignItems='center' ml={20} mr={10}>
@@ -253,6 +312,7 @@ const BudgetIndexPage = (props) => {
                     category={budget.category}
                     expenses={expensesThisMonth[budget.category]}
                     handleEdit={handleEdit}
+                    handleDelete={handleDelete}
                   />
                 );
               })}
