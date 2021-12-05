@@ -298,7 +298,7 @@ function TransactionsTable(props) {
             {page.map((row) => {
               prepareRow(row);
               return (
-                <Tr {...row.getRowProps()}>
+                <Tr {...row.getRowProps()} _hover={{ bg: 'gray.100' }}>
                   {row.cells.map((cell) => {
                     return (
                       <Td {...cell.getCellProps()} fontSize='16'>

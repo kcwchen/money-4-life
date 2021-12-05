@@ -15,7 +15,7 @@ export default function BudgetDetails(props) {
   const [value, setValue] = useState(0);
 
   useEffect(() => {
-    setValue((props.expenses / props.amount) * 100);
+    setValue(((props.expenses || 0) / props.amount) * 100);
   });
 
   return (
@@ -30,6 +30,8 @@ export default function BudgetDetails(props) {
         rounded={'lg'}
         pos={'relative'}
         zIndex={1}
+        _hover={{ transform: 'scale(1.2)' }}
+        transition='all 0.5s ease'
       >
         <Stack align={'center'}>
           <CircularProgress
@@ -37,14 +39,17 @@ export default function BudgetDetails(props) {
             transition='all 0.5s ease'
             value={value}
             color={
-              (props.expenses / props.amount) * 100 > 100
+              ((props.expenses || 0) / props.amount) * 100 > 100
                 ? 'red.300'
                 : 'blue.300'
             }
+            _hover={{ scale: 2 }}
           >
-            <CircularProgressLabel fontSize='30'>
-              ${props.amount}
-            </CircularProgressLabel>
+            <Tooltip label={`$${props.expenses || 0} / $${props.amount}`}>
+              <CircularProgressLabel fontSize='30'>
+                ${props.amount}
+              </CircularProgressLabel>
+            </Tooltip>
           </CircularProgress>
           <Heading fontSize={'2xl'} fontFamily={'body'} fontWeight={500}>
             {props.category}

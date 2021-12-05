@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import NewBudgetForm from './NewBudgetForm';
 import { Budget, Transaction } from '../requests';
 import AuthContext from '../context/auth-context';
-import { Flex, Box, Heading } from '@chakra-ui/layout';
+import { Flex, Box, Heading } from '@chakra-ui/react';
 import BudgetDetails from './BudgetDetails';
 import { Spinner } from '@chakra-ui/spinner';
 
@@ -13,9 +13,9 @@ const BudgetIndexPage = (props) => {
   const [expensesThisMonth, setExpensesThisMonth] = useState({});
   const [dataReturned, setDataReturned] = useState(false);
 
-  const round = (num) => {
-    return Math.round((num + Number.EPSILON) * 100) / 100;
-  };
+  // const round = (num) => {
+  //   return Math.round((num + Number.EPSILON) * 100) / 100;
+  // };
 
   useEffect(() => {
     Budget.index().then((data) => {
@@ -25,10 +25,15 @@ const BudgetIndexPage = (props) => {
         transactions = transactions.filter((t) => t.user_id === ctx.user.id);
         const expenses = {};
         transactions.forEach((transaction) => {
-          if (expenses[transaction.category]) {
-            expenses[transaction.category] += round(transaction.amount / 100);
-          } else {
-            expenses[transaction.category] = round(transaction.amount / 100);
+          transaction.amount = transaction.amount / 100;
+          const transactionMonth =
+            new Date(transaction.transaction_date).getMonth() + 1;
+          if (transactionMonth === new Date().getMonth() + 1) {
+            if (expenses[transaction.category]) {
+              expenses[transaction.category] += transaction.amount;
+            } else {
+              expenses[transaction.category] = transaction.amount;
+            }
           }
         });
         setExpensesThisMonth(expenses);
