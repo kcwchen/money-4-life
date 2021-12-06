@@ -145,7 +145,7 @@ export default function SignUpPage(props) {
           <Box align='center'>
             <Text fontSize={'lg'} color={'gray.600'}>
               Already have an account?{' '}
-              <Link as={ReactLink} to='/sign_in' color={'blue.400'}>
+              <Link as={ReactLink} to='/' color={'blue.400'}>
                 Sign In!
               </Link>
             </Text>

@@ -17,9 +17,21 @@ import {
   MenuDivider,
   IconButton,
 } from '@chakra-ui/react';
-import { FiMoreHorizontal } from 'react-icons/fi';
+import {
+  FiMoreHorizontal,
+  FiEdit2,
+  FiTrash2,
+  FiCornerDownRight,
+} from 'react-icons/fi';
 
-const SubscriptionDetails = ({ name, amount, billingPeriod }) => {
+const SubscriptionDetails = ({
+  id,
+  name,
+  amount,
+  billingPeriod,
+  handleSubscriptionStatus,
+  isActive,
+}) => {
   return (
     <Box
       maxW='400px'
@@ -33,31 +45,56 @@ const SubscriptionDetails = ({ name, amount, billingPeriod }) => {
       _hover={{ backgroundColor: 'gray.200' }}
       m={2}
       cursor='pointer'
+      onClick={() => console.log('hello')}
     >
       <Flex flexDir='row' justifyContent='space-between' align={'center'}>
         <Stack direction={'row'} spacing={5}>
           <Avatar name={name} />
-          <Text pr={10} fontWeight={600} alignSelf='center'>
+          <Text fontWeight={600} alignSelf='center'>
             {name}
           </Text>
         </Stack>
-        <Stack
-          direction={'column'}
-          align='flex-end'
-          spacing={0}
-          fontSize={'sm'}
-        >
-          <Text fontWeight={600}>${amount / 100}</Text>
-          <Text color={'gray.500'}>{billingPeriod}</Text>
+        <Stack direction={'row'}>
+          <Stack
+            direction={'column'}
+            align='flex-end'
+            spacing={0}
+            fontSize={'sm'}
+          >
+            <Text fontWeight={600}>${amount / 100}</Text>
+            <Text color={'gray.500'}>{billingPeriod}</Text>
+          </Stack>
+          <Menu>
+            <MenuButton
+              bg='transparent'
+              as={IconButton}
+              icon={<FiMoreHorizontal />}
+            />
+            <MenuList>
+              <MenuItem icon={<FiEdit2 />}>Edit</MenuItem>
+              {isActive ? (
+                <MenuItem
+                  icon={<FiCornerDownRight />}
+                  onClick={() => {
+                    handleSubscriptionStatus({ is_active: 'false' }, id);
+                  }}
+                >
+                  Set Inactive
+                </MenuItem>
+              ) : (
+                <MenuItem
+                  icon={<FiCornerDownRight />}
+                  onClick={() => {
+                    handleSubscriptionStatus({ is_active: 'true' }, id);
+                  }}
+                >
+                  Set Active
+                </MenuItem>
+              )}
+              <MenuItem icon={<FiTrash2 />}>Delete</MenuItem>
+            </MenuList>
+          </Menu>
         </Stack>
-        <Menu>
-          <MenuButton as={IconButton} icon={<FiMoreHorizontal />} />
-          <MenuList>
-            <MenuItem>Edit</MenuItem>
-            <MenuItem>Set Inactive</MenuItem>
-            <MenuItem>Delete</MenuItem>
-          </MenuList>
-        </Menu>
       </Flex>
     </Box>
   );

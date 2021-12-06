@@ -12,19 +12,43 @@ import {
 } from '@chakra-ui/react';
 import AuthContext from '../context/auth-context';
 import SubscriptionDetails from './SubscriptionDetails';
+import { get } from 'react-hook-form';
 
 const SubscriptionIndexPage = (props) => {
   const [subscriptions, setSubscriptions] = useState([]);
+  const [activeSubscriptions, setActiveSubscriptions] = useState([]);
+  const [inactiveSubscriptions, setInactiveSubscriptions] = useState([]);
   const [dataReturned, setDataReturned] = useState(false);
+
   const ctx = useContext(AuthContext);
 
+  const getSubscriptions = () => {
+    // get all active subscriptions
+    Subscription.indexQuery(`id=${ctx.user.id}&is_active=true`).then(
+      (subscriptions) => {
+        // subscriptions = subscriptions.filter((s) => s.user_id === ctx.user.id);
+        setActiveSubscriptions(subscriptions);
+      }
+    );
+    // get all inactive subscriptions
+    Subscription.indexQuery(`id=${ctx.user.id}&is_active=false`).then(
+      (subscriptions) => {
+        setInactiveSubscriptions(subscriptions);
+      }
+    );
+    return setDataReturned(true);
+  };
+
   useEffect(() => {
-    Subscription.indexQuery(`id=${ctx.user.id}`).then((subscriptions) => {
-      // subscriptions = subscriptions.filter((s) => s.user_id === ctx.user.id);
-      setSubscriptions(subscriptions);
-      setDataReturned(true);
-    });
+    getSubscriptions();
   }, []);
+
+  const handleSubscriptionStatus = (params, sid) => {
+    setDataReturned(false);
+    Subscription.update(params, sid).then(() => {
+      getSubscriptions();
+    });
+  };
 
   return (
     <>
@@ -34,33 +58,55 @@ const SubscriptionIndexPage = (props) => {
             <Flex w='100%' justifyContent='flex-start' mt={10}>
               <Heading as='h1'>Subscriptions</Heading>
             </Flex>
-            <Flex
-              flexDir='row'
-              flexWrap='wrap'
-              w='100%'
-              alignItems='center'
-              mt={10}
-            >
+            <Flex w='100%' alignItems='center' mt={10}>
               <Tabs isFitted w='100%'>
                 <TabList>
-                  <Tab>Active</Tab>
-                  <Tab>Inactive</Tab>
+                  <Tab>Active {`(${activeSubscriptions.length})`}</Tab>
+                  <Tab>Inactive {`(${inactiveSubscriptions.length})`}</Tab>
                 </TabList>
 
                 <TabPanels>
                   <TabPanel>
-                    {subscriptions.map((subscription) => {
-                      return (
-                        <SubscriptionDetails
-                          name={subscription.name}
-                          amount={subscription.amount}
-                          billingPeriod={subscription.billing_period}
-                        />
-                      );
-                    })}
+                    <Flex
+                      flexDir='row'
+                      flexWrap='wrap'
+                      w='100%'
+                      alignItems='center'
+                    >
+                      {activeSubscriptions.map((subscription) => {
+                        return (
+                          <SubscriptionDetails
+                            id={subscription.id}
+                            name={subscription.name}
+                            amount={subscription.amount}
+                            billingPeriod={subscription.billing_period}
+                            handleSubscriptionStatus={handleSubscriptionStatus}
+                            isActive={subscription.is_active}
+                          />
+                        );
+                      })}
+                    </Flex>
                   </TabPanel>
                   <TabPanel>
-                    <p>Inactive subscriptions go here</p>
+                    <Flex
+                      flexDir='row'
+                      flexWrap='wrap'
+                      w='100%'
+                      alignItems='center'
+                    >
+                      {inactiveSubscriptions.map((subscription) => {
+                        return (
+                          <SubscriptionDetails
+                            id={subscription.id}
+                            name={subscription.name}
+                            amount={subscription.amount}
+                            billingPeriod={subscription.billing_period}
+                            handleSubscriptionStatus={handleSubscriptionStatus}
+                            isActive={subscription.is_active}
+                          />
+                        );
+                      })}
+                    </Flex>
                   </TabPanel>
                 </TabPanels>
               </Tabs>

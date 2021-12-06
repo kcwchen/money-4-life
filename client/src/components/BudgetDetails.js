@@ -15,6 +15,7 @@ import {
   PopoverBody,
   PopoverArrow,
 } from '@chakra-ui/react';
+import { FiEdit2, FiTrash2 } from 'react-icons/fi';
 
 export default function BudgetDetails(props) {
   const { handleEdit, handleDelete } = props;
@@ -96,6 +97,7 @@ export default function BudgetDetails(props) {
               <Button
                 bg='yellow.300'
                 _hover={{ bg: 'yellow.400' }}
+                leftIcon={<FiEdit2 />}
                 onClick={() => {
                   handleEdit({
                     id: props.id,
@@ -109,6 +111,7 @@ export default function BudgetDetails(props) {
               <Button
                 bg='red.300'
                 _hover={{ bg: 'red.400' }}
+                leftIcon={<FiTrash2 />}
                 onClick={() => {
                   handleDelete({
                     bid: props.id,

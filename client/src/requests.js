@@ -123,4 +123,14 @@ export const Subscription = {
   indexQuery(query) {
     return fetch(`${baseUrl}/subscriptions?${query}`).then((res) => res.json());
   },
+  update(params, sid) {
+    return fetch(`${baseUrl}/subscriptions/${sid}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+      body: JSON.stringify(params),
+    }).then((res) => res.json());
+  },
 };
