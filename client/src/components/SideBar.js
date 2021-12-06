@@ -22,7 +22,7 @@ import {
 import NavItem from './NavItem';
 import { Session } from '../requests';
 import { withRouter } from 'react-router-dom';
-import logo from '../assets/images/logo.jpg';
+import logo from '../assets/images/logo.png';
 
 const SideBar = (props) => {
   const { onSignOut, currentUser } = props;

@@ -4,7 +4,7 @@ class Transaction < ApplicationRecord
   belongs_to :subscription, optional: true
   belongs_to :category
 
-  validates :amount, numericality: {greater_than: 0}
+  validates :amount, numericality: {greater_than_or_equal_to: 0}
   validates :description, presence: true
   validates :transaction_date, presence: true
 

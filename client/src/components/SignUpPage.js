@@ -17,7 +17,7 @@ import {
   HStack,
   Image,
 } from '@chakra-ui/react';
-import logo from '../assets/images/logo.jpg';
+import logo from '../assets/images/logo.png';
 
 export default function SignUpPage(props) {
   const [isLoading, setIsLoading] = useState(false);

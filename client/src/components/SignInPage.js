@@ -17,7 +17,7 @@ import {
   Text,
   useColorModeValue,
 } from '@chakra-ui/react';
-import logo from '../assets/images/logo.jpg';
+import logo from '../assets/images/logo.png';
 
 export default function SignInPage(props) {
   const [isLoading, setIsLoading] = useState(false);
