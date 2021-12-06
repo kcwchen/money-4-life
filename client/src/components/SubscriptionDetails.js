@@ -16,6 +16,7 @@ import {
   MenuCommand,
   MenuDivider,
   IconButton,
+  Portal,
 } from '@chakra-ui/react';
 import {
   FiMoreHorizontal,
@@ -44,6 +45,7 @@ const SubscriptionDetails = ({
       overflow={'hidden'}
       _hover={{ backgroundColor: 'gray.200' }}
       m={2}
+      opacity={isActive ? '1' : '0.5'}
       cursor='pointer'
       onClick={() => console.log('hello')}
     >
@@ -70,29 +72,37 @@ const SubscriptionDetails = ({
               as={IconButton}
               icon={<FiMoreHorizontal />}
             />
-            <MenuList>
-              <MenuItem icon={<FiEdit2 />}>Edit</MenuItem>
-              {isActive ? (
-                <MenuItem
-                  icon={<FiCornerDownRight />}
-                  onClick={() => {
-                    handleSubscriptionStatus({ is_active: 'false' }, id);
-                  }}
-                >
-                  Set Inactive
-                </MenuItem>
-              ) : (
-                <MenuItem
-                  icon={<FiCornerDownRight />}
-                  onClick={() => {
-                    handleSubscriptionStatus({ is_active: 'true' }, id);
-                  }}
-                >
-                  Set Active
-                </MenuItem>
-              )}
-              <MenuItem icon={<FiTrash2 />}>Delete</MenuItem>
-            </MenuList>
+            <Portal>
+              <MenuList>
+                <MenuItem icon={<FiEdit2 />}>Edit</MenuItem>
+                {isActive ? (
+                  <MenuItem
+                    icon={<FiCornerDownRight />}
+                    onClick={() => {
+                      handleSubscriptionStatus(
+                        { is_active: 'false', name: name },
+                        id
+                      );
+                    }}
+                  >
+                    Set Inactive
+                  </MenuItem>
+                ) : (
+                  <MenuItem
+                    icon={<FiCornerDownRight />}
+                    onClick={() => {
+                      handleSubscriptionStatus(
+                        { is_active: 'true', name: name },
+                        id
+                      );
+                    }}
+                  >
+                    Set Active
+                  </MenuItem>
+                )}
+                <MenuItem icon={<FiTrash2 />}>Delete</MenuItem>
+              </MenuList>
+            </Portal>
           </Menu>
         </Stack>
       </Flex>

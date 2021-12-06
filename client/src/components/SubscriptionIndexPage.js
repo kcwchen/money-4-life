@@ -9,6 +9,7 @@ import {
   TabPanels,
   Tab,
   TabPanel,
+  useToast,
 } from '@chakra-ui/react';
 import AuthContext from '../context/auth-context';
 import SubscriptionDetails from './SubscriptionDetails';
@@ -19,6 +20,8 @@ const SubscriptionIndexPage = (props) => {
   const [activeSubscriptions, setActiveSubscriptions] = useState([]);
   const [inactiveSubscriptions, setInactiveSubscriptions] = useState([]);
   const [dataReturned, setDataReturned] = useState(false);
+  const [toastMessage, setToastMessage] = useState(undefined);
+  const toast = useToast();
 
   const ctx = useContext(AuthContext);
 
@@ -43,10 +46,29 @@ const SubscriptionIndexPage = (props) => {
     getSubscriptions();
   }, []);
 
+  useEffect(() => {
+    if (toastMessage) {
+      const { title, status } = toastMessage;
+
+      toast({
+        title,
+        status,
+        duration: 9000,
+        isClosable: true,
+      });
+    }
+  }, [toastMessage, toast]);
+
   const handleSubscriptionStatus = (params, sid) => {
     setDataReturned(false);
-    Subscription.update(params, sid).then(() => {
+    Subscription.update({ is_active: params.is_active }, sid).then(() => {
       getSubscriptions();
+    });
+    setToastMessage({
+      title: `${params.name} subscription set to ${
+        params.is_active === 'true' ? 'active' : 'inactive'
+      }`,
+      status: 'info',
     });
   };
 
