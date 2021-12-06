@@ -46,11 +46,7 @@ export default function BudgetDetails(props) {
             flexDir='column'
             cursor='pointer'
           >
-            <Stack
-              align={'center'}
-              // _hover={{ transform: 'scale(1.1)' }}
-              // transition='all 0.5s ease'
-            >
+            <Stack align={'center'}>
               <CircularProgress
                 size='250px'
                 transition='all 0.5s ease'

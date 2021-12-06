@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
-import NewBudgetForm from './NewBudgetForm';
 import { Budget, Transaction } from '../requests';
 import AuthContext from '../context/auth-context';
 import {
@@ -39,7 +38,6 @@ import { FiPlus } from 'react-icons/fi';
 import { useForm } from 'react-hook-form';
 
 const BudgetIndexPage = (props) => {
-  // const { currentUser } = props;
   const ctx = useContext(AuthContext);
   const [budgets, setBudgets] = useState([]);
   const [expensesThisMonth, setExpensesThisMonth] = useState({});
@@ -85,12 +83,10 @@ const BudgetIndexPage = (props) => {
   const getBudgetsAndTransactionsForCurrentMonth = () => {
     return Budget.indexQuery(`id=${ctx.user.id}`).then((data) => {
       let total = 0;
-      // data = data.filter((b) => b.user_id === ctx.user.id);
       data.forEach((b) => (total += b.amount));
       setBudgetTotal(total);
       setBudgets(data);
       Transaction.indexQuery(`id=${ctx.user.id}`).then((transactions) => {
-        // transactions = transactions.filter((t) => t.user_id === ctx.user.id);
         const expenses = {};
         transactions.forEach((transaction) => {
           transaction.amount = transaction.amount / 100;
@@ -322,9 +318,6 @@ const BudgetIndexPage = (props) => {
             >
               {budgets.map((budget) => {
                 return (
-                  // <h3 key={budget.id}>
-                  //   ${budget.amount / 100} - {budget.category} - {budget.user_id}
-                  // </h3>
                   <BudgetDetails
                     id={budget.id}
                     amount={budget.amount / 100}

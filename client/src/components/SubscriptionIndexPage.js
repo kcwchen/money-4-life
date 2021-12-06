@@ -29,7 +29,6 @@ const SubscriptionIndexPage = (props) => {
     // get all active subscriptions
     Subscription.indexQuery(`id=${ctx.user.id}&is_active=true`).then(
       (subscriptions) => {
-        // subscriptions = subscriptions.filter((s) => s.user_id === ctx.user.id);
         setActiveSubscriptions(subscriptions);
       }
     );

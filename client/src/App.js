@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import AuthContext from './context/auth-context';
 import SignInPage from './components/SignInPage';
 import SignUpPage from './components/SignUpPage';
-// import SignUp from './components/SignUp';
 import BudgetIndexPage from './components/BudgetIndexPage';
 import TransactionIndexPage from './components/TransactionIndexPage';
 import SubscriptionIndexPage from './components/SubscriptionIndexPage';

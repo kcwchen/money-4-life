@@ -30,13 +30,6 @@ export default function SignUpPage(props) {
 
   const onSubmit = (data) => {
     setIsLoading(true);
-    // e.preventDefault();
-    // const formData = new FormData(e.currentTarget);
-    // const params = {
-    //   email: formData.get('email'),
-    //   password: formData.get('password'),
-    // };
-    // console.log(params);
     User.create(data).then((user) => {
       if (user?.id) {
         onSignUp();

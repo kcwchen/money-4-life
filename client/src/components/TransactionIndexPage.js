@@ -101,7 +101,6 @@ const TransactionIndexPage = (props) => {
 
   const getTransactions = () => {
     return Transaction.indexQuery(`id=${ctx.user.id}`).then((transactions) => {
-      // transactions = transactions.filter((t) => t.user_id === ctx.user.id);
       transactions.forEach((transaction) => {
         transaction.amount = transaction.amount / 100;
         transaction.transaction_date = new Date(
@@ -287,14 +286,7 @@ const TransactionIndexPage = (props) => {
         </AlertDialogOverlay>
       </AlertDialog>
       {dataReturned ? (
-        <Flex
-          flexDir='column'
-          w='100%'
-          // justifyContent='center'
-          alignItems='center'
-          ml={20}
-          mr={10}
-        >
+        <Flex flexDir='column' w='100%' alignItems='center' ml={20} mr={10}>
           <TransactionsTable
             tableData={transactions}
             columnsData={columns}

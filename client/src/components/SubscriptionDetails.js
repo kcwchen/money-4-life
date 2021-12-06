@@ -9,12 +9,6 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
-  MenuItemOption,
-  MenuGroup,
-  MenuOptionGroup,
-  MenuIcon,
-  MenuCommand,
-  MenuDivider,
   IconButton,
   Portal,
 } from '@chakra-ui/react';
@@ -37,8 +31,6 @@ const SubscriptionDetails = ({
     <Box
       maxW='400px'
       w='100%'
-      // bg={useColorModeValue('white', 'gray.900')}
-      // bgGradient='linear(135deg, #e3e3e3 0%,#9ea4aa 100%)'
       boxShadow={'md'}
       rounded={'md'}
       p={6}
