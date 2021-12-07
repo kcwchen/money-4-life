@@ -198,7 +198,7 @@ function TransactionsTable(props) {
                       <option value='weekly'>Weekly</option>
                       <option value='biweekly'>Bi-Weekly</option>
                       <option value='monthly'>Monthly</option>
-                      <option value='yearly'>Yearly</option>
+                      <option value='yearly'>Annually</option>
                     </Select>
                   </FormControl>
                 </>

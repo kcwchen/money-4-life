@@ -13,12 +13,23 @@ class Api::V1::TransactionsController < Api::ApplicationController
   end
 
   def create
+
+    if params[:billing_period] == 'weekly'
+      next_payment_date = params[:transaction_date].to_date + 1.week
+    elsif params[:billing_period] == 'biweekly'
+      next_payment_date = params[:transaction_date].to_date + 2.week
+    elsif params[:billing_period] == 'monthly'
+      next_payment_date = params[:transaction_date].to_date + 1.month
+    elsif params[:billing_period] == 'annually'
+      next_payment_date = params[:transaction_date].to_date + 1.year
+    end
+    byebug
     if params[:is_subscription] == 'true'
       @subscription = Subscription.find_by name: params[:subscription_name].titleize, user: current_user
       if !@subscription
-        @subscription = Subscription.create(name: params[:subscription_name].titleize, billing_period: params[:billing_period].titleize, amount: @amount, user: current_user)
+        @subscription = Subscription.create(name: params[:subscription_name].titleize, billing_period: params[:billing_period].titleize, amount: @amount, user: current_user, last_paid_date: params[:transaction_date], next_payment_date: next_payment_date)
       else
-        @subscription.update(billing_period: params[:billing_period].titleize, amount: @amount, is_active: true)
+        @subscription.update(billing_period: params[:billing_period].titleize, amount: @amount, is_active: true, last_paid_date: params[:transaction_date], next_payment_date: next_payment_date)
       end
       transaction = Transaction.new(amount: @amount, description: params[:description], transaction_date: params[:transaction_date], category: @category, account: @account, subscription: @subscription, is_subscription: true)
     else

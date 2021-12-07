@@ -4,16 +4,22 @@ class Api::V1::SubscriptionsController < Api::ApplicationController
   before_action :subscription_params, except: [:index]
 
   def index
+    if params[:order_by]
+      order_by = params[:order_by]
+    else
+      order_by = 'created_at'
+    end
+
     if params[:id] && params[:is_active]
       if params[:is_active] === 'true'
-       subscriptions = Subscription.where(user_id: params[:id], is_active: true).order(created_at: :asc)
+       subscriptions = Subscription.where(user_id: params[:id], is_active: true).order("#{order_by}": :asc)
       elsif params[:is_active] === 'false'
-        subscriptions = Subscription.where(user_id: params[:id], is_active: false).order(created_at: :asc)
+        subscriptions = Subscription.where(user_id: params[:id], is_active: false).order("#{order_by}": :asc)
       elsif params[:id]
-        subscriptions = Subscription.where(user_id: params[:id]).order(created_at: :asc)
+        subscriptions = Subscription.where(user_id: params[:id]).order("#{order_by}": :asc)
       end
     else
-      subscriptions = Subscription.all.order(created_at: :asc)
+      subscriptions = Subscription.all.order("#{order_by}": :asc)
     end
     render json: subscriptions, each_serializer: SubscriptionCollectionSerializer
   end

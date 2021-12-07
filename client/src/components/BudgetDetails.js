@@ -59,13 +59,13 @@ export default function BudgetDetails(props) {
                 _hover={{ scale: 2 }}
               >
                 <Tooltip
-                  label={`$${(
+                  label={`$${
                     props.amount.toFixed(2) -
-                    (props.expenses ? props.expenses.toFixed(2) : 0)
-                  ).toFixed(2)} Remaining`}
+                    (props.expenses ? props.expenses : 0)
+                  } Remaining`}
                 >
                   <CircularProgressLabel fontSize='30'>
-                    ${props.expenses ? props.expenses.toFixed(2) : 0}{' '}
+                    ${props.expenses ? props.expenses : 0}{' '}
                     <hr
                       style={{
                         width: '50%',
@@ -76,7 +76,7 @@ export default function BudgetDetails(props) {
                         backgroundColor: '#333',
                       }}
                     />
-                    ${props.amount.toFixed(2)}
+                    ${props.amount}
                   </CircularProgressLabel>
                 </Tooltip>
               </CircularProgress>
