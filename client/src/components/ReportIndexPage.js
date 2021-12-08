@@ -182,20 +182,27 @@ const ReportIndexPage = () => {
           flexDir='column'
           w='100%'
           h='100%'
-          // alignItems='center'
+          alignItems='center'
           ml={20}
           mr={10}
         >
           <Flex w='100%' justifyContent='flex-start' mt={10}>
             <Heading as='h1'>Reports</Heading>
           </Flex>
-          <Flex flexDir='row' w='100%%' h='50%' mt={5} mb={5}>
+          <Flex
+            flexDir='row'
+            alignSelf='flex-start'
+            w='95%'
+            h='50%'
+            mt={5}
+            mb={5}
+          >
             <Flex flexDir='column' h='100%' w='50%' mr={10}>
               <Heading as='h3' size='md' mb={5}>
                 Category Breakdown for {months[new Date().getUTCMonth()]},{' '}
                 {new Date().getUTCFullYear()}
               </Heading>
-              <Box boxShadow='lg' h='100%'>
+              <Box boxShadow='lg' h='100%' rounded={'lg'}>
                 <PieChart data={categories} />
               </Box>
             </Flex>
@@ -203,7 +210,7 @@ const ReportIndexPage = () => {
               <Heading as='h3' size='md' mb={5}>
                 Monthly Breakdown
               </Heading>
-              <Box boxShadow='lg' h='100%' minW='0'>
+              <Box boxShadow='lg' h='100%' rounded={'lg'}>
                 <BarChart
                   data={lastSixMonthlyTotals}
                   colors={(bar) => bar.data.color}
@@ -215,7 +222,7 @@ const ReportIndexPage = () => {
             <Heading as='h3' size='md' mb={5}>
               Upcoming Payments
             </Heading>
-            <Box boxShadow={'md'} rounded={'lg'} minW='0'>
+            <Box boxShadow={'md'} rounded={'lg'}>
               <UpcomingPaymentsTable
                 tableData={subscriptions}
                 columnsData={columns}
