@@ -1,7 +1,7 @@
 class Subscription < ApplicationRecord
   belongs_to :user
 
-  has_many :transactions, dependent: :destroy
+  has_many :transactions, dependent: :nullify
 
   validates :name, presence: true
   validates :name, uniqueness: { scope: :user_id, message: "already exists" }

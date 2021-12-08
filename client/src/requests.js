@@ -133,4 +133,13 @@ export const Subscription = {
       body: JSON.stringify(params),
     }).then((res) => res.json());
   },
+  destroy(sid) {
+    return fetch(`${baseUrl}/subscriptions/${sid}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+    }).then((res) => res.json());
+  },
 };

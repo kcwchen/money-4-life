@@ -96,6 +96,21 @@ const SubscriptionIndexPage = (props) => {
       data.subscription_id
     ).then(() => {
       getSubscriptions();
+      setToastMessage({
+        title: `${data.name} subscription updated`,
+        status: 'success',
+      });
+    });
+  };
+
+  const handleSubscriptionDelete = (params) => {
+    setDataReturned(false);
+    Subscription.destroy(params.id).then(() => {
+      getSubscriptions();
+      setToastMessage({
+        title: `${params.name} subscription deleted`,
+        status: 'success',
+      });
     });
   };
 
@@ -132,6 +147,7 @@ const SubscriptionIndexPage = (props) => {
                             handleSubscriptionStatus={handleSubscriptionStatus}
                             isActive={subscription.is_active}
                             handleSubscriptionEdit={handleSubscriptionEdit}
+                            handleSubscriptionDelete={handleSubscriptionDelete}
                           />
                         );
                       })}
@@ -153,6 +169,7 @@ const SubscriptionIndexPage = (props) => {
                             billingPeriod={subscription.billing_period}
                             handleSubscriptionStatus={handleSubscriptionStatus}
                             isActive={subscription.is_active}
+                            handleSubscriptionDelete={handleSubscriptionDelete}
                           />
                         );
                       })}

@@ -1,7 +1,7 @@
 class Api::V1::SubscriptionsController < Api::ApplicationController
   before_action :authenticate_user!, except: [:index]
   before_action :find_subscription, except: [:index]
-  before_action :subscription_params, except: [:index]
+  before_action :subscription_params, except: [:index, :destroy]
 
   def index
     if params[:order_by]
@@ -54,6 +54,14 @@ class Api::V1::SubscriptionsController < Api::ApplicationController
       else
         render json: {errors: @subscription.errors, status: 422}
       end
+    end
+  end
+
+  def destroy
+    if @subscription.destroy
+      render json: {status:200}
+    else
+      render json: {status:500}
     end
   end
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import {
   Stack,
   Avatar,
@@ -24,6 +24,12 @@ import {
   Input,
   Select,
   Button,
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialogOverlay,
 } from '@chakra-ui/react';
 import {
   FiMoreHorizontal,
@@ -41,6 +47,7 @@ const SubscriptionDetails = ({
   handleSubscriptionStatus,
   isActive,
   handleSubscriptionEdit,
+  handleSubscriptionDelete,
 }) => {
   const {
     register,
@@ -48,7 +55,13 @@ const SubscriptionDetails = ({
     setValue,
     formState: { errors },
   } = useForm();
+  const cancelRef = useRef();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: alertIsOpen,
+    onOpen: alertOnOpen,
+    onClose: alertOnClose,
+  } = useDisclosure();
 
   const handleEdit = () => {
     setValue('name', name);
@@ -104,6 +117,40 @@ const SubscriptionDetails = ({
           </form>
         </ModalContent>
       </Modal>
+      <AlertDialog
+        isOpen={alertIsOpen}
+        onClose={alertOnClose}
+        leastDestructiveRef={cancelRef}
+      >
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+              Delete Budget Category
+            </AlertDialogHeader>
+
+            <AlertDialogBody>
+              Are you sure? You can't undo this action afterwards.
+            </AlertDialogBody>
+
+            <AlertDialogFooter>
+              <Button ref={cancelRef} onClick={alertOnClose}>
+                Cancel
+              </Button>
+              <Button
+                type='submit'
+                colorScheme='red'
+                onClick={() => {
+                  alertOnClose();
+                  handleSubscriptionDelete({ id, name });
+                }}
+                ml={3}
+              >
+                Delete
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
       <Box
         maxW='400px'
         w='100%'
@@ -178,7 +225,9 @@ const SubscriptionDetails = ({
                       Set Active
                     </MenuItem>
                   )}
-                  <MenuItem icon={<FiTrash2 />}>Delete</MenuItem>
+                  <MenuItem icon={<FiTrash2 />} onClick={alertOnOpen}>
+                    Delete
+                  </MenuItem>
                 </MenuList>
               </Portal>
             </Menu>
