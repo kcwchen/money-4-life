@@ -203,7 +203,7 @@ const BudgetIndexPage = (props) => {
                 <FormLabel>Category</FormLabel>
                 <Input
                   type='text'
-                  placeholder='Category'
+                  placeholder='e.g. Food'
                   name='category'
                   {...register('category')}
                 />

@@ -122,12 +122,7 @@ function TransactionsTable(props) {
                     color='gray.500'
                     children='$'
                   />
-                  <Input
-                    type='number'
-                    step='0.01'
-                    placeholder='Amount'
-                    {...register('amount')}
-                  />
+                  <Input type='number' step='0.01' {...register('amount')} />
                 </InputGroup>
               </FormControl>
 
@@ -135,7 +130,7 @@ function TransactionsTable(props) {
                 <FormLabel>Description</FormLabel>
                 <Input
                   type='text'
-                  placeholder='Description'
+                  placeholder="e.g. McDonald's"
                   {...register('description')}
                 />
               </FormControl>
@@ -144,7 +139,7 @@ function TransactionsTable(props) {
                 <FormLabel>Category</FormLabel>
                 <Input
                   type='text'
-                  placeholder='Category'
+                  placeholder='e.g. Food'
                   {...register('category')}
                 />
               </FormControl>
@@ -153,7 +148,7 @@ function TransactionsTable(props) {
                 <FormLabel>Account</FormLabel>
                 <Input
                   type='text'
-                  placeholder='Account'
+                  placeholder='e.g. Credit Card'
                   {...register('account')}
                 />
               </FormControl>
@@ -183,7 +178,7 @@ function TransactionsTable(props) {
                   <FormControl mt={4}>
                     <FormLabel>Subscription Name</FormLabel>
                     <Input
-                      placeholder='Subscription Name'
+                      placeholder='e.g. Netflix'
                       type='string'
                       {...register('subscription_name')}
                     />
