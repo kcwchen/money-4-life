@@ -431,7 +431,7 @@ const BudgetIndexPage = (props) => {
                     size='250px'
                     transition='all 0.5s ease'
                     value={0}
-                    trackColor='pink'
+                    trackColor='gray.300'
                     _hover={{ scale: 2 }}
                   >
                     <Tooltip label='Add Category'>
