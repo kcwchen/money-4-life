@@ -10,10 +10,21 @@ import {
   Tab,
   TabPanel,
   useToast,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  FormControl,
+  FormLabel,
+  useDisclosure,
+  Input,
 } from '@chakra-ui/react';
 import AuthContext from '../context/auth-context';
 import SubscriptionDetails from './SubscriptionDetails';
-import { get } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 
 const SubscriptionIndexPage = (props) => {
   const [subscriptions, setSubscriptions] = useState([]);
@@ -22,6 +33,13 @@ const SubscriptionIndexPage = (props) => {
   const [dataReturned, setDataReturned] = useState(false);
   const [toastMessage, setToastMessage] = useState(undefined);
   const toast = useToast();
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const ctx = useContext(AuthContext);
 
@@ -71,6 +89,16 @@ const SubscriptionIndexPage = (props) => {
     });
   };
 
+  const handleSubscriptionEdit = (data) => {
+    setDataReturned(false);
+    Subscription.update(
+      { name: data.name, billing_period: data.billing_period },
+      data.subscription_id
+    ).then(() => {
+      getSubscriptions();
+    });
+  };
+
   return (
     <>
       {dataReturned ? (
@@ -103,6 +131,7 @@ const SubscriptionIndexPage = (props) => {
                             billingPeriod={subscription.billing_period}
                             handleSubscriptionStatus={handleSubscriptionStatus}
                             isActive={subscription.is_active}
+                            handleSubscriptionEdit={handleSubscriptionEdit}
                           />
                         );
                       })}

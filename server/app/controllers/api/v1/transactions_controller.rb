@@ -23,7 +23,7 @@ class Api::V1::TransactionsController < Api::ApplicationController
     elsif params[:billing_period] == 'annually'
       next_payment_date = params[:transaction_date].to_date + 1.year
     end
-    byebug
+
     if params[:is_subscription] == 'true'
       @subscription = Subscription.find_by name: params[:subscription_name].titleize, user: current_user
       if !@subscription

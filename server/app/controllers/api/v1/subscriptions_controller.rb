@@ -31,8 +31,25 @@ class Api::V1::SubscriptionsController < Api::ApplicationController
       else
         render json: {errors: @subscription.errors, status: 422}
       end
-    else @is_active == 'true'
+    elsif @is_active == 'true'
       if @subscription.update(is_active: true)
+        render json: {id: @subscription.id}
+      else
+        render json: {errors: @subscription.errors, status: 422}
+      end
+    elsif @name && @billing_period
+
+      if @billing_period == 'weekly'
+        next_payment_date = @subscription.last_paid_date + 1.week
+      elsif @billing_period == 'biweekly'
+        next_payment_date = @subscription.last_paid_date + 2.week
+      elsif @billing_period == 'monthly'
+        next_payment_date = @subscription.last_paid_date + 1.month
+      elsif @billing_period == 'annually'
+        next_payment_date = @subscription.last_paid_date + 1.year
+      end
+
+      if @subscription.update(name: @name, billing_period: @billing_period.titleize, next_payment_date: next_payment_date)
         render json: {id: @subscription.id}
       else
         render json: {errors: @subscription.errors, status: 422}
@@ -48,5 +65,7 @@ class Api::V1::SubscriptionsController < Api::ApplicationController
 
   def subscription_params
     @is_active = params[:is_active]
+    @name = params[:name]
+    @billing_period = params[:billing_period]
   end
 end
