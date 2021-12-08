@@ -16,7 +16,7 @@ import {
 
 export default function Hero() {
   return (
-    <Container
+    <Flex
       maxW='100%'
       pos='relative'
       pt={{ base: 0, md: 10 }}
@@ -30,9 +30,9 @@ export default function Hero() {
         textAlign={'left'}
         align='flex-start'
         spacing={{ base: 8, md: 10 }}
-        pt={{ base: 20, md: 40 }}
+        pt={{ base: 20, md: 60 }}
         pb={{ base: 20, md: 20 }}
-        ml={{ base: 20, md: 60 }}
+        ml={{ base: 5, md: 60 }}
         maxW='lg'
       >
         <Heading fontWeight={600} fontSize='6xl' zIndex={5} data-aos='fade-up'>
@@ -58,7 +58,7 @@ export default function Hero() {
           <Button
             data-aos='fade-up'
             as='a'
-            href='http:/localhost:3001/signup'
+            href='http://localhost:3001/sign_up'
             size='lg'
             rounded={'full'}
             px={6}
@@ -80,6 +80,6 @@ export default function Hero() {
           </Button>
         </Stack>
       </Stack>
-    </Container>
+    </Flex>
   );
 }

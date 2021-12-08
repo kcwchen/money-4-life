@@ -35,7 +35,7 @@ export default function Nav() {
       borderBottom={1}
       borderStyle={'solid'}
       borderColor='gray.100'
-      pos='fixed'
+      pos='sticky'
       top={0}
       w='100%'
       zIndex={8}
