@@ -100,9 +100,9 @@ export default function Nav() {
             display={{ base: 'none', md: 'inline-flex' }}
             fontWeight={600}
             color={'white'}
-            bg={'gray.700'}
+            bg={'blue'}
             _hover={{
-              bg: 'gray.800',
+              bg: '#5842d8',
             }}
           >
             Signup

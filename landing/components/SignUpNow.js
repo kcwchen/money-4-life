@@ -12,7 +12,6 @@ export default function SignUpNow() {
   return (
     <Container maxW={'6xl'}>
       <Box
-        mt={-20}
         py='4rem'
         bg='linear-gradient(
       45deg,#8E2DE2,#4A00E0)'
@@ -25,7 +24,7 @@ export default function SignUpNow() {
             Get started today
           </Heading>
           <Text color='whiteAlpha.900' fontSize={'xl'}>
-            Signup now and take back control over your subscriptions.
+            Let us help you keep your Money for Life.
           </Text>
           <Box>
             <Button
@@ -38,7 +37,7 @@ export default function SignUpNow() {
               bg={'#6F55FF'}
               _hover={{ bg: '#5842d8' }}
             >
-              Get started for free
+              Sign Up
             </Button>
           </Box>
         </Stack>

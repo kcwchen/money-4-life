@@ -3,6 +3,7 @@ import Hero from '../components/Hero';
 import Nav from '../components/Nav.tsx';
 import Feature from '../components/Feature.js';
 import SignUpNow from '../components/SignUpNow';
+import Footer from '../components/Footer';
 
 export default function Home() {
   return (
@@ -33,6 +34,7 @@ export default function Home() {
         inverted
       />
       <SignUpNow />
+      <Footer />
     </>
   );
 }
