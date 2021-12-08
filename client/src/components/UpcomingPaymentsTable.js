@@ -32,6 +32,7 @@ const UpcomingPaymentsTable = (props) => {
         // pr={5}
         // pl={5}
         bg='#fff'
+        // overflowX='scroll'
       >
         <Table {...getTableProps()} variant='simple'>
           <Thead>

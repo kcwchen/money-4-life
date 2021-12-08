@@ -61,7 +61,7 @@ const ReportIndexPage = () => {
           year: 'numeric',
         });
       });
-      setSubscriptions(subscriptions);
+      setSubscriptions(subscriptions.slice(0, 5));
       getTransactions();
       setDataReturned(true);
     });
@@ -182,11 +182,11 @@ const ReportIndexPage = () => {
           flexDir='column'
           w='100%'
           h='100%'
-          // align='center'
+          // alignItems='center'
           ml={20}
           mr={10}
         >
-          <Flex w='95%' justifyContent='flex-start' mt={10}>
+          <Flex w='100%' justifyContent='flex-start' mt={10}>
             <Heading as='h1'>Reports</Heading>
           </Flex>
           <Flex flexDir='row' w='100%%' h='50%' mt={5} mb={5}>
@@ -203,7 +203,7 @@ const ReportIndexPage = () => {
               <Heading as='h3' size='md' mb={5}>
                 Monthly Breakdown
               </Heading>
-              <Box boxShadow='lg' h='100%'>
+              <Box boxShadow='lg' h='100%' minW='0'>
                 <BarChart
                   data={lastSixMonthlyTotals}
                   colors={(bar) => bar.data.color}
@@ -215,7 +215,7 @@ const ReportIndexPage = () => {
             <Heading as='h3' size='md' mb={5}>
               Upcoming Payments
             </Heading>
-            <Box boxShadow={'md'} rounded={'lg'}>
+            <Box boxShadow={'md'} rounded={'lg'} minW='0'>
               <UpcomingPaymentsTable
                 tableData={subscriptions}
                 columnsData={columns}
