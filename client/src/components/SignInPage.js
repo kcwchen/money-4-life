@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Session } from '../requests';
 import { Link as ReactLink } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
@@ -18,15 +18,23 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 import logo from '../assets/images/logo.png';
+import AuthContext from '../context/auth-context';
 
 export default function SignInPage(props) {
   const [isLoading, setIsLoading] = useState(false);
   const { onSignIn } = props;
+  const ctx = useContext(AuthContext);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+
+  useEffect(() => {
+    if (ctx.user) {
+      props.history.push('/home');
+    }
+  });
 
   const onSubmit = (data) => {
     setIsLoading(true);
