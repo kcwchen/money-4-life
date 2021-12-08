@@ -7,6 +7,7 @@ import {
   Flex,
   Icon,
   Text,
+  Heading,
   IconButton,
   Stack,
   VStack,
@@ -67,8 +68,15 @@ export default function Nav() {
             color={useColorModeValue('gray.800', 'white')}
             _hover={{ textDecoration: 'none' }}
           >
-            <Image src='/logo.svg' alt='m4l logo' width='20px' height='30px' />
-            <Text pl={3}>M4L</Text>
+            <Image
+              src='/logo512.png'
+              alt='m4l logo'
+              width='50px'
+              height='50px'
+            />
+            <Heading pl={3} as='h2' fontSize={24}>
+              M4L.
+            </Heading>
           </Button>
 
           <Flex display={{ base: 'none', md: 'flex' }} ml={8}>
