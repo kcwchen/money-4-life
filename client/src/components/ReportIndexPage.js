@@ -178,19 +178,40 @@ const ReportIndexPage = () => {
   return (
     <>
       {dataReturned ? (
-        <Flex flexDir='column' w='100%' h='100%' align='center' ml={20} mr={10}>
-          <Flex w='100%' justifyContent='flex-start' mt={10}>
+        <Flex
+          flexDir='column'
+          w='100%'
+          h='100%'
+          // align='center'
+          ml={20}
+          mr={10}
+        >
+          <Flex w='95%' justifyContent='flex-start' mt={10}>
             <Heading as='h1'>Reports</Heading>
           </Flex>
-          <Flex flexDir='row' w='100%%' h='500px'>
-            <h1>Hello</h1>
-            <PieChart data={categories} />
-            <BarChart
-              data={lastSixMonthlyTotals}
-              colors={(bar) => bar.data.color}
-            />
+          <Flex flexDir='row' w='100%%' h='50%' mt={5} mb={5}>
+            <Flex flexDir='column' h='100%' w='50%' mr={10}>
+              <Heading as='h3' size='md' mb={5}>
+                Category Breakdown for {months[new Date().getUTCMonth()]},{' '}
+                {new Date().getUTCFullYear()}
+              </Heading>
+              <Box boxShadow='lg' h='100%'>
+                <PieChart data={categories} />
+              </Box>
+            </Flex>
+            <Flex flexDir='column' h='100%' w='50%'>
+              <Heading as='h3' size='md' mb={5}>
+                Monthly Breakdown
+              </Heading>
+              <Box boxShadow='lg' h='100%'>
+                <BarChart
+                  data={lastSixMonthlyTotals}
+                  colors={(bar) => bar.data.color}
+                />
+              </Box>
+            </Flex>
           </Flex>
-          <Flex flexDir='column' w='100%'>
+          <Flex flexDir='column' w='100%' mt={5}>
             <Heading as='h3' size='md' mb={5}>
               Upcoming Payments
             </Heading>

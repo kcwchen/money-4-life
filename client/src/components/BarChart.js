@@ -12,7 +12,7 @@ const BarChart = ({ data, colors /* see data tab */ }) => {
       data={data}
       keys={['monthlyTotal', colors]}
       indexBy='month'
-      margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
+      margin={{ top: 50, right: 60, bottom: 50, left: 60 }}
       padding={0.3}
       valueScale={{ type: 'linear' }}
       indexScale={{ type: 'band', round: true }}
@@ -52,7 +52,7 @@ const BarChart = ({ data, colors /* see data tab */ }) => {
       //     id: 'lines',
       //   },
       // ]}
-      borderColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
+      // borderColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
       axisTop={null}
       axisRight={null}
       axisBottom={{
@@ -66,33 +66,10 @@ const BarChart = ({ data, colors /* see data tab */ }) => {
         tickRotation: 0,
       }}
       enableGridY={false}
+      enableLabel={false}
       labelSkipWidth={12}
       labelSkipHeight={12}
       labelTextColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
-      legends={[
-        {
-          dataFrom: 'colors',
-          anchor: 'bottom-right',
-          direction: 'column',
-          justify: false,
-          translateX: 120,
-          translateY: 0,
-          itemsSpacing: 2,
-          itemWidth: 100,
-          itemHeight: 20,
-          itemDirection: 'left-to-right',
-          itemOpacity: 0.85,
-          symbolSize: 20,
-          effects: [
-            {
-              on: 'hover',
-              style: {
-                itemOpacity: 1,
-              },
-            },
-          ],
-        },
-      ]}
       role='application'
       ariaLabel='Monthly Breakdown'
     />
