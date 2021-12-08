@@ -54,19 +54,32 @@ const ReportIndexPage = () => {
 
   const getTransactions = () => {
     return Transaction.indexQuery(`id=${ctx.user.id}`).then((transactions) => {
+      let transactionsThisMonth = [];
       const categoriesName = [];
       transactions.forEach((transaction) => {
-        if (!categoriesName.includes(transaction.category)) {
-          categoriesName.push(transaction.category);
+        const transactionMonth =
+          new Date(transaction.transaction_date).getUTCMonth() + 1;
+        const transactionYear = new Date(
+          transaction.transaction_date
+        ).getUTCFullYear();
+        if (
+          transactionMonth === new Date().getUTCMonth() + 1 &&
+          transactionYear === new Date().getUTCFullYear()
+        ) {
+          transactionsThisMonth.push(transaction);
+          if (!categoriesName.includes(transaction.category)) {
+            categoriesName.push(transaction.category);
+          }
         }
       });
+
       const categoriesForPieChart = [];
       categoriesName.forEach((category) => {
         const categoryDetails = {};
         let amount = 0;
         categoryDetails['id'] = category;
         categoryDetails['label'] = category;
-        transactions
+        transactionsThisMonth
           .filter((transaction) => transaction.category === category)
           .forEach((transaction) => (amount += transaction.amount / 100));
         categoryDetails['value'] = amount.toFixed(2);

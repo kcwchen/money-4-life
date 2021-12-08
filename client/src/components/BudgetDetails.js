@@ -66,7 +66,7 @@ export default function BudgetDetails(props) {
                   } Remaining`}
                 >
                   <CircularProgressLabel fontSize='30'>
-                    ${props.expenses ? props.expenses : 0}{' '}
+                    ${props.expenses ? props.expenses.toFixed(2) : 0}{' '}
                     <hr
                       style={{
                         width: '50%',
@@ -77,7 +77,7 @@ export default function BudgetDetails(props) {
                         backgroundColor: '#333',
                       }}
                     />
-                    ${props.amount}
+                    ${props.amount.toFixed(2)}
                   </CircularProgressLabel>
                 </Tooltip>
               </CircularProgress>

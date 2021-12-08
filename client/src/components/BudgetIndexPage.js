@@ -42,7 +42,6 @@ const BudgetIndexPage = (props) => {
   const [budgets, setBudgets] = useState([]);
   const [expensesThisMonth, setExpensesThisMonth] = useState({});
   const [dataReturned, setDataReturned] = useState(false);
-  const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
   const [budgetTotal, setBudgetTotal] = useState(0);
   const [budgetToDelete, setBudgetToDelete] = useState(null);
   const cancelRef = useRef();
@@ -91,13 +90,13 @@ const BudgetIndexPage = (props) => {
         transactions.forEach((transaction) => {
           transaction.amount = transaction.amount / 100;
           const transactionMonth =
-            new Date(transaction.transaction_date).getMonth() + 1;
+            new Date(transaction.transaction_date).getUTCMonth() + 1;
           const transactionYear = new Date(
             transaction.transaction_date
-          ).getFullYear();
+          ).getUTCFullYear();
           if (
-            transactionMonth === currentMonth + 1 &&
-            transactionYear === new Date().getFullYear()
+            transactionMonth === new Date().getUTCMonth() + 1 &&
+            transactionYear === new Date().getUTCFullYear()
           ) {
             if (expenses[transaction.category]) {
               expenses[transaction.category] += transaction.amount;
@@ -311,7 +310,8 @@ const BudgetIndexPage = (props) => {
                   Your Total Monthly Budget is ${budgetTotal / 100}
                 </Heading>
                 <Heading as='h2'>
-                  {months[currentMonth]} {new Date().getFullYear()}
+                  {months[new Date().getUTCMonth()]}{' '}
+                  {new Date().getUTCFullYear()}
                 </Heading>
               </Stack>
             </Flex>
