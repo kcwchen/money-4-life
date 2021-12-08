@@ -92,7 +92,13 @@ const BudgetIndexPage = (props) => {
           transaction.amount = transaction.amount / 100;
           const transactionMonth =
             new Date(transaction.transaction_date).getMonth() + 1;
-          if (transactionMonth === currentMonth + 1) {
+          const transactionYear = new Date(
+            transaction.transaction_date
+          ).getFullYear();
+          if (
+            transactionMonth === currentMonth + 1 &&
+            transactionYear === new Date().getFullYear()
+          ) {
             if (expenses[transaction.category]) {
               expenses[transaction.category] += transaction.amount;
             } else {
