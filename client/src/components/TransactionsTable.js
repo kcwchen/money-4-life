@@ -347,7 +347,9 @@ function TransactionsTable(props) {
               borderRadius='50%'
               bg='#fff'
               border='1px solid lightgray'
-              display={canPreviousPage ? 'flex' : 'none'}
+              display={
+                pageCount >= 10 ? 'none' : canPreviousPage ? 'flex' : 'none'
+              }
               _hover={{
                 bg: 'gray.200',
                 opacity: '0.7',
@@ -357,32 +359,49 @@ function TransactionsTable(props) {
             >
               <Icon as={GrFormPrevious} w='16px' h='16px' color='gray.400' />
             </Button>
-            {createPages(pageCount).map((pageNumber) => {
-              return (
-                <Button
-                  variant='no-hover'
-                  transition='all .5s ease'
-                  onClick={() => gotoPage(pageNumber - 1)}
-                  w='40px'
-                  h='40px'
-                  borderRadius='160px'
-                  bg={pageNumber === pageIndex + 1 ? 'green.600' : '#fff'}
-                  border='1px solid lightgray'
-                  _hover={{
-                    bg: 'gray.200',
-                    opacity: '0.7',
-                    borderColor: 'gray.500',
-                  }}
-                >
-                  <Text
-                    fontSize='xs'
-                    color={pageNumber === pageIndex + 1 ? '#fff' : 'gray.600'}
+            {pageCount >= 10 ? (
+              <NumberInput
+                max={pageCount - 1}
+                min={1}
+                w='75px'
+                mx='6px'
+                defaultValue='1'
+                onChange={(e) => gotoPage(e)}
+              >
+                <NumberInputField />
+                <NumberInputStepper>
+                  <NumberIncrementStepper onClick={() => nextPage()} />
+                  <NumberDecrementStepper onClick={() => previousPage()} />
+                </NumberInputStepper>
+              </NumberInput>
+            ) : (
+              createPages(pageCount).map((pageNumber) => {
+                return (
+                  <Button
+                    variant='no-hover'
+                    transition='all .5s ease'
+                    onClick={() => gotoPage(pageNumber - 1)}
+                    w='40px'
+                    h='40px'
+                    borderRadius='160px'
+                    bg={pageNumber === pageIndex + 1 ? 'green.600' : '#fff'}
+                    border='1px solid lightgray'
+                    _hover={{
+                      bg: 'gray.200',
+                      opacity: '0.7',
+                      borderColor: 'gray.500',
+                    }}
                   >
-                    {pageNumber}
-                  </Text>
-                </Button>
-              );
-            })}
+                    <Text
+                      fontSize='xs'
+                      color={pageNumber === pageIndex + 1 ? '#fff' : 'gray.600'}
+                    >
+                      {pageNumber}
+                    </Text>
+                  </Button>
+                );
+              })
+            )}
             <Button
               variant='no-hover'
               onClick={() => nextPage()}
@@ -392,7 +411,7 @@ function TransactionsTable(props) {
               borderRadius='160px'
               bg='#fff'
               border='1px solid lightgray'
-              display={canNextPage ? 'flex' : 'none'}
+              display={pageCount >= 10 ? 'none' : canNextPage ? 'flex' : 'none'}
               _hover={{
                 bg: 'gray.200',
                 opacity: '0.7',

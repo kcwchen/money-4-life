@@ -21,13 +21,6 @@ User.create(
   password: PASSWORD
 )
 
-User.create(
-  first_name: 'Floof',
-  last_name: 'Chen',
-  email: 'floof@chen.com',
-  password: PASSWORD
-)
-
 users = User.all
 
 Category.create(
@@ -41,9 +34,6 @@ Category.create(
 )
 Category.create(
   name: 'Clothing'
-)
-Category.create(
-  name: 'Rent'
 )
 Category.create(
   name: 'Medical'
@@ -63,9 +53,9 @@ Category.create(
 
 categories = Category.all
 
-20.times do
+10.times do
   b = Budget.create(
-    amount: rand(1..100000),
+    amount: rand(1..50000),
     category: categories.sample,
     user: users.sample
   )
@@ -80,8 +70,8 @@ end
 
 accounts = Account.all
 
-100.times do
-  date_of_transaction = Faker::Date.backward(days: 365)
+200.times do
+  date_of_transaction = Faker::Date.backward(days: 182)
 
   t = Transaction.create(
     amount: rand(1..20000),
