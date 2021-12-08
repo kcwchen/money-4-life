@@ -24,15 +24,16 @@ const UpcomingPaymentsTable = (props) => {
       <Flex
         direction='column'
         w='100%'
-        mt={10}
-        mb={10}
-        pt={10}
-        pb={10}
-        pr={5}
-        pl={5}
+        // p={2}
+        // mt={10}
+        // mb={10}
+        // pt={10}
+        // pb={10}
+        // pr={5}
+        // pl={5}
         bg='#fff'
       >
-        <Table {...getTableProps()} variant='simple' color='gray.500' mb='24px'>
+        <Table {...getTableProps()} variant='simple'>
           <Thead>
             {headerGroups.map((headerGroup) => (
               <Tr {...headerGroup.getHeaderGroupProps()}>
@@ -55,10 +56,14 @@ const UpcomingPaymentsTable = (props) => {
             {rows.map((row) => {
               prepareRow(row);
               return (
-                <Tr {...row.getRowProps()} _hover={{ bg: 'gray.100' }}>
+                <Tr {...row.getRowProps()}>
                   {row.cells.map((cell) => {
                     return (
-                      <Td {...cell.getCellProps()} fontSize='16'>
+                      <Td
+                        {...cell.getCellProps()}
+                        fontSize='16'
+                        color='gray.600'
+                      >
                         {cell.render('Cell')}
                       </Td>
                     );

@@ -105,7 +105,12 @@ const TransactionIndexPage = (props) => {
         transaction.amount = transaction.amount / 100;
         transaction.transaction_date = new Date(
           transaction.transaction_date
-        ).toLocaleDateString('en-CA', { timeZone: 'UTC' });
+        ).toLocaleDateString('en-CA', {
+          timeZone: 'UTC',
+          month: 'long',
+          day: '2-digit',
+          year: 'numeric',
+        });
       });
       setTransactions(transactions);
       setDataReturned(true);

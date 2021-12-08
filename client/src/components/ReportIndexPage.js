@@ -1,14 +1,16 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Flex, Heading } from '@chakra-ui/react';
+import { Flex, Heading, Box } from '@chakra-ui/react';
 import { Subscription, Transaction } from '../requests';
 import AuthContext from '../context/auth-context';
 import UpcomingPaymentsTable from './UpcomingPaymentsTable';
 import PieChart from './PieChart';
+import BarChart from './BarChart';
 import { Spinner } from '@chakra-ui/spinner';
 
 const ReportIndexPage = () => {
   const [subscriptions, setSubscriptions] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [lastSixMonthlyTotals, setLastSixMonthlyTotals] = useState([]);
   const [dataReturned, setDataReturned] = useState(false);
   const ctx = useContext(AuthContext);
   const columns = [
@@ -29,12 +31,25 @@ const ReportIndexPage = () => {
       accessor: 'next_payment_date',
     },
   ];
+  const months = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+  ];
 
   const getSubscriptions = () => {
     return Subscription.indexQuery(
       `id=${ctx.user.id}&is_active=true&order_by=next_payment_date`
     ).then((subscriptions) => {
-      console.log(subscriptions);
       subscriptions.forEach((subscription) => {
         subscription.amount = subscription.amount / 100;
         subscription.next_payment_date = new Date(
@@ -52,19 +67,86 @@ const ReportIndexPage = () => {
     });
   };
 
+  const getLastSixMonths = () => {
+    const today = new Date();
+    let lastSixMonths = [];
+    for (let i = 5; i >= 0; i -= 1) {
+      if (today.getMonth() - i === -5) {
+        lastSixMonths.push({
+          month: months[7],
+          year: today.getUTCFullYear() - 1,
+          monthlyTotal: 0,
+          color: 'rgb(202,213,224)',
+        });
+      } else if (today.getMonth() - i === -4) {
+        lastSixMonths.push({
+          month: months[8],
+          year: today.getUTCFullYear() - 1,
+          monthlyTotal: 0,
+          color: 'rgb(202,213,224)',
+        });
+      } else if (today.getMonth() - i === -3) {
+        lastSixMonths.push({
+          month: months[9],
+          year: today.getUTCFullYear() - 1,
+          monthlyTotal: 0,
+          color: 'rgb(202,213,224)',
+        });
+      } else if (today.getMonth() - i === -2) {
+        lastSixMonths.push({
+          month: months[10],
+          year: today.getUTCFullYear() - 1,
+          monthlyTotal: 0,
+          color: 'rgb(202,213,224)',
+        });
+      } else if (today.getMonth() - i === -1) {
+        lastSixMonths.push({
+          month: months[11],
+          year: today.getUTCFullYear() - 1,
+          monthlyTotal: 0,
+          color: 'rgb(202,213,224)',
+        });
+      } else if (i === 0) {
+        lastSixMonths.push({
+          month: months[today.getUTCMonth() - i],
+          year: today.getUTCFullYear(),
+          monthlyTotal: 0,
+          color: 'rgb(111,85,255)',
+        });
+      } else {
+        lastSixMonths.push({
+          month: months[today.getUTCMonth() - i],
+          year: today.getUTCFullYear(),
+          monthlyTotal: 0,
+          color: 'rgb(202,213,224)',
+        });
+      }
+    }
+    return lastSixMonths;
+  };
+
   const getTransactions = () => {
     return Transaction.indexQuery(`id=${ctx.user.id}`).then((transactions) => {
-      let transactionsThisMonth = [];
+      const today = new Date();
       const categoriesName = [];
+      const dataForBarChart = getLastSixMonths();
+      let transactionsThisMonth = [];
       transactions.forEach((transaction) => {
         const transactionMonth =
-          new Date(transaction.transaction_date).getUTCMonth() + 1;
+          months[new Date(transaction.transaction_date).getUTCMonth()];
         const transactionYear = new Date(
           transaction.transaction_date
         ).getUTCFullYear();
+        const month = dataForBarChart.find(
+          ({ month, year }) =>
+            month === transactionMonth && year === transactionYear
+        );
+        if (month) {
+          month.monthlyTotal += transaction.amount / 100;
+        }
         if (
-          transactionMonth === new Date().getUTCMonth() + 1 &&
-          transactionYear === new Date().getUTCFullYear()
+          transactionMonth === months[today.getUTCMonth()] &&
+          transactionYear === today.getUTCFullYear()
         ) {
           transactionsThisMonth.push(transaction);
           if (!categoriesName.includes(transaction.category)) {
@@ -72,7 +154,7 @@ const ReportIndexPage = () => {
           }
         }
       });
-
+      setLastSixMonthlyTotals(dataForBarChart);
       const categoriesForPieChart = [];
       categoriesName.forEach((category) => {
         const categoryDetails = {};
@@ -91,28 +173,34 @@ const ReportIndexPage = () => {
 
   useEffect(() => {
     getSubscriptions();
-    console.log(categories);
   }, []);
 
   return (
     <>
       {dataReturned ? (
-        <Flex
-          flexDir='column'
-          w='100%'
-          h='100%'
-          alignItems='center'
-          ml={20}
-          mr={10}
-        >
-          <Flex flexDir='column'>
-            <Heading>Upcoming Payments</Heading>
-            <UpcomingPaymentsTable
-              tableData={subscriptions}
-              columnsData={columns}
+        <Flex flexDir='column' w='100%' h='100%' align='center' ml={20} mr={10}>
+          <Flex w='100%' justifyContent='flex-start' mt={10}>
+            <Heading as='h1'>Reports</Heading>
+          </Flex>
+          <Flex flexDir='row' w='100%%' h='500px'>
+            <h1>Hello</h1>
+            <PieChart data={categories} />
+            <BarChart
+              data={lastSixMonthlyTotals}
+              colors={(bar) => bar.data.color}
             />
           </Flex>
-          <PieChart data={categories} />
+          <Flex flexDir='column' w='100%'>
+            <Heading as='h3' size='md' mb={5}>
+              Upcoming Payments
+            </Heading>
+            <Box boxShadow={'md'} rounded={'lg'}>
+              <UpcomingPaymentsTable
+                tableData={subscriptions}
+                columnsData={columns}
+              />
+            </Box>
+          </Flex>
         </Flex>
       ) : (
         <Flex

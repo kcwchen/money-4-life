@@ -222,11 +222,13 @@ function TransactionsTable(props) {
         w='100%'
         mt={10}
         mb={10}
-        pt={10}
-        pb={10}
+        pt={5}
+        pb={5}
         pr={5}
         pl={5}
         bg='#fff'
+        boxShadow={'md'}
+        rounded={'lg'}
       >
         <Flex justify='space-between' align='center' w='100%' px='22px'>
           <Stack

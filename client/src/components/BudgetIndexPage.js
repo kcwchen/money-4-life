@@ -61,6 +61,21 @@ const BudgetIndexPage = (props) => {
     'November',
     'December',
   ];
+  const categories = [
+    'Housing',
+    'Communications',
+    'Food',
+    'Entertainment',
+    'Transportation',
+    'Education',
+    'Recreation',
+    'Personal Care',
+    'Clothing',
+    'Medical',
+    'Pets',
+    'Fees',
+    'Gifts',
+  ];
   const {
     register,
     handleSubmit,
@@ -169,6 +184,12 @@ const BudgetIndexPage = (props) => {
     alertOnOpen();
   };
 
+  const onFocus = (e) => {
+    if (e.target.autocomplete) {
+      e.target.autocompelte = 'whatever';
+    }
+  };
+
   return (
     <>
       <Modal isOpen={isOpen} onClose={onClose}>
@@ -178,6 +199,15 @@ const BudgetIndexPage = (props) => {
             <ModalHeader>Add Budget Category</ModalHeader>
             <ModalCloseButton />
             <ModalBody pb={6}>
+              <FormControl mt={4}>
+                <FormLabel>Category</FormLabel>
+                <Input
+                  type='text'
+                  placeholder='Category'
+                  name='category'
+                  {...register('category')}
+                />
+              </FormControl>
               <FormControl mt={4}>
                 <FormLabel>Amount</FormLabel>
                 <InputGroup>
@@ -193,15 +223,6 @@ const BudgetIndexPage = (props) => {
                     {...register('amount')}
                   />
                 </InputGroup>
-              </FormControl>
-              <FormControl mt={4}>
-                <FormLabel>Category</FormLabel>
-                <Input
-                  type='text'
-                  placeholder='Category'
-                  name='category'
-                  {...register('category')}
-                />
               </FormControl>
             </ModalBody>
 
