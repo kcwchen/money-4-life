@@ -217,7 +217,17 @@ function TransactionsTable(props) {
       <Flex w='100%' justifyContent='flex-start' mt={10}>
         <Heading as='h1'>Transactions</Heading>
       </Flex>
-      <Flex direction='column' w='100%' mt={10} mb={10}>
+      <Flex
+        direction='column'
+        w='100%'
+        mt={10}
+        mb={10}
+        pt={10}
+        pb={10}
+        pr={5}
+        pl={5}
+        bg='#fff'
+      >
         <Flex justify='space-between' align='center' w='100%' px='22px'>
           <Stack
             direction={{ sm: 'column', md: 'row' }}

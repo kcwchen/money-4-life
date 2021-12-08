@@ -347,16 +347,12 @@ const BudgetIndexPage = (props) => {
                     size='250px'
                     transition='all 0.5s ease'
                     value={0}
-                    color={
-                      ((props.expenses || 0) / props.amount) * 100 > 100
-                        ? 'red.300'
-                        : 'blue.300'
-                    }
+                    trackColor='gray.300'
                     _hover={{ scale: 2 }}
                   >
                     <Tooltip label='Add Category'>
                       <CircularProgressLabel fontSize='30'>
-                        <Icon as={FiPlus} boxSize={36} color='gray.300' />
+                        <Icon as={FiPlus} boxSize={36} color='gray.400' />
                       </CircularProgressLabel>
                     </Tooltip>
                   </CircularProgress>
@@ -408,11 +404,7 @@ const BudgetIndexPage = (props) => {
                     size='250px'
                     transition='all 0.5s ease'
                     value={0}
-                    color={
-                      ((props.expenses || 0) / props.amount) * 100 > 100
-                        ? 'red.300'
-                        : 'blue.300'
-                    }
+                    trackColor='pink'
                     _hover={{ scale: 2 }}
                   >
                     <Tooltip label='Add Category'>

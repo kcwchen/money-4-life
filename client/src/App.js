@@ -6,6 +6,7 @@ import SignUpPage from './components/SignUpPage';
 import BudgetIndexPage from './components/BudgetIndexPage';
 import TransactionIndexPage from './components/TransactionIndexPage';
 import SubscriptionIndexPage from './components/SubscriptionIndexPage';
+import ReportIndexPage from './components/ReportIndexPage';
 import SideBar from './components/SideBar';
 import AuthRoute from './components/AuthRoute';
 import { Flex } from '@chakra-ui/react';
@@ -74,6 +75,13 @@ const App = () => {
                   isAuthenticated={!!user}
                   user={user}
                   component={SubscriptionIndexPage}
+                />
+                <AuthRoute
+                  exact
+                  path='/reports'
+                  isAuthenticated={!!user}
+                  user={user}
+                  component={ReportIndexPage}
                 />
               </Flex>
             </Flex>

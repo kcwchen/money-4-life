@@ -45,6 +45,7 @@ export default function BudgetDetails(props) {
             display='flex'
             flexDir='column'
             cursor='pointer'
+            bg='#fff'
           >
             <Stack align={'center'}>
               <CircularProgress
