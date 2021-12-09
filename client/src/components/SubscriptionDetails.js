@@ -125,7 +125,7 @@ const SubscriptionDetails = ({
         <AlertDialogOverlay>
           <AlertDialogContent>
             <AlertDialogHeader fontSize='lg' fontWeight='bold'>
-              Delete Budget Category
+              Delete Subscription
             </AlertDialogHeader>
 
             <AlertDialogBody>
