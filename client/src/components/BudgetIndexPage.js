@@ -243,6 +243,15 @@ const BudgetIndexPage = (props) => {
             <ModalCloseButton />
             <ModalBody pb={6}>
               <FormControl mt={4}>
+                <FormLabel>Category</FormLabel>
+                <Input
+                  type='text'
+                  placeholder='Category'
+                  name='edit_category'
+                  {...register('edit_category')}
+                />
+              </FormControl>
+              <FormControl mt={4}>
                 <Input
                   type='hidden'
                   name='budget_id'
@@ -262,15 +271,6 @@ const BudgetIndexPage = (props) => {
                     {...register('edit_amount')}
                   />
                 </InputGroup>
-              </FormControl>
-              <FormControl mt={4}>
-                <FormLabel>Category</FormLabel>
-                <Input
-                  type='text'
-                  placeholder='Category'
-                  name='edit_category'
-                  {...register('edit_category')}
-                />
               </FormControl>
             </ModalBody>
 
