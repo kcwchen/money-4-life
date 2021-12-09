@@ -232,7 +232,7 @@ function TransactionsTable(props) {
             align='center'
             me='12px'
             my='24px'
-            minW={{ sm: '100px', md: '200px' }}
+            minW={{ sm: '100px', md: '250px' }}
           >
             <Select
               value={pageSize}
@@ -250,7 +250,7 @@ function TransactionsTable(props) {
               <option>25</option>
             </Select>
             <Text fontSize='xs' color='gray.400' fontWeight='normal'>
-              entries per page
+              transactions per page
             </Text>
           </Stack>
           <Input
@@ -330,7 +330,7 @@ function TransactionsTable(props) {
             {pageSize * (pageIndex + 1) <= tableData.length
               ? pageSize * (pageIndex + 1)
               : tableData.length}{' '}
-            of {tableData.length} entries
+            of {tableData.length} transactions
           </Text>
           <Stack direction='row' alignSelf='flex-end' spacing='4px' ms='auto'>
             <Button
