@@ -17,6 +17,7 @@ const PieChart = ({ data /* see data tab */ }) => {
       activeOuterRadiusOffset={8}
       borderWidth={1}
       borderColor={{ from: 'color', modifiers: [['darker', 0.2]] }}
+      enableArcLinkLabels={false}
       arcLinkLabelsSkipAngle={10}
       arcLinkLabelsTextColor='#333333'
       arcLinkLabelsThickness={2}
