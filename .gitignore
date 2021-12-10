@@ -100,3 +100,21 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
+
+# Nextjs
+
+# testing
+/landing/coverage
+
+# next.js
+/landing/.next/
+/landing/out/
+
+# production
+/landing/build
+
+# misc
+*.pem
+
+# vercel
+.vercel
