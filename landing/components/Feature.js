@@ -43,7 +43,7 @@ export default function Feature({ heading, desc, inverted, id, img }) {
                 color='#fff'
                 cursor='pointer'
                 rightIcon={<FiArrowRight />}
-                href='http://localhost:3001/sign_up'
+                href='http://money-4-life-app.vercel.app/sign_up'
               >
                 Get started
               </Button>

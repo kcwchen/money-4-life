@@ -29,7 +29,7 @@ export default function SignUpNow() {
           <Box>
             <Button
               as='a'
-              href='http://localhost:3001/sign_up'
+              href='http://money-4-life-app.vercel.app/sign_up'
               size='lg'
               rounded='full'
               px={6}
