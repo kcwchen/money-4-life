@@ -91,12 +91,12 @@ export default function Nav() {
           spacing={6}
           align='center'
         >
-          <Link href='http://localhost:3001'>
+          <Link href='http://money-4-life-app.vercel.app'>
             <a>Login</a>
           </Link>
           <Button
             as='a'
-            href='http://localhost:3001/sign_up'
+            href='http://money-4-life-app.vercel.app/sign_up'
             display={{ base: 'none', md: 'inline-flex' }}
             fontWeight={600}
             color={'white'}

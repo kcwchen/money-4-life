@@ -44,7 +44,7 @@ export default function Hero() {
           <Button
             data-aos='fade-up'
             as='a'
-            href='http://localhost:3001/sign_up'
+            href='http://money-4-life-app.vercel.app/sign_up'
             size='lg'
             rounded={'full'}
             px={6}

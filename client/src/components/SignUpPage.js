@@ -51,7 +51,7 @@ export default function SignUpPage(props) {
   return (
     <>
       <Link
-        href='http://localhost:3002'
+        href='http://money-4-life.vercel.app'
         textDecor='none'
         _hover={{ textDecor: 'none' }}
       >
