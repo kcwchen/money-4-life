@@ -1,4 +1,4 @@
-const baseUrl = 'http://money-4-life.herokuapp.com/api/v1';
+const baseUrl = 'https://money-4-life.herokuapp.com/api/v1';
 
 export const User = {
   current() {
