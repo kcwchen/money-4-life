@@ -2,7 +2,7 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins 'localhost:9999', 'localhost:5550', 'localhost:3001'
+    origins 'https://money-4-life-app.vercel.app'
     resource(
       '/api/*',
       headers: :any,

@@ -51,7 +51,7 @@ export default function SignUpPage(props) {
   return (
     <>
       <Link
-        href='http://money-4-life.vercel.app'
+        href='https://money-4-life.vercel.app'
         textDecor='none'
         _hover={{ textDecor: 'none' }}
       >
@@ -124,6 +124,16 @@ export default function SignUpPage(props) {
                     name='password'
                     placeholder='Password'
                     {...register('password')}
+                  />
+                  {errors.password}
+                </FormControl>
+                <FormControl id='passwordConfirmation' isRequired>
+                  <FormLabel>Confirm Password</FormLabel>
+                  <Input
+                    type='password'
+                    name='password'
+                    placeholder='Password'
+                    {...register('password_cofirmation')}
                   />
                   {errors.password}
                 </FormControl>
