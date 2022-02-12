@@ -42,7 +42,7 @@ export default function SignInPage(props) {
       if (user?.id) {
         onSignIn();
         setTimeout(() => {
-          props.history.push('home');
+          props.history.push('/home');
         }, 2000);
       }
     });

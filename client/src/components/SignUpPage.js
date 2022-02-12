@@ -42,7 +42,7 @@ export default function SignUpPage(props) {
       if (user?.id) {
         onSignUp();
         setTimeout(() => {
-          props.history.push('home');
+          props.history.push('/home');
         }, 2000);
       }
     });
@@ -133,7 +133,7 @@ export default function SignUpPage(props) {
                     type='password'
                     name='password'
                     placeholder='Password'
-                    {...register('password_cofirmation')}
+                    {...register('password_confirmation')}
                   />
                   {errors.password}
                 </FormControl>
